@@ -1,0 +1,3287 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ABS
+    AND_B
+    COMMA
+    COMMENT
+    L_BRACKET
+    NEWLINE
+    NOT_B
+    OR_B
+    QUOTE_1
+    QUOTE_2
+    R_BRACKET
+    SHIFT_L
+    SHIFT_R
+    XOR
+    XOR_B
+
+Grammar
+
+Rule 0     S' -> start
+Rule 1     start -> MAIN COLON body
+Rule 2     body -> goto body
+Rule 3     body -> unset body
+Rule 4     body -> print body
+Rule 5     body -> exit body
+Rule 6     body -> tag body
+Rule 7     body -> if body
+Rule 8     body -> assign body
+Rule 9     body -> declaration body
+Rule 10    body -> empty
+Rule 11    goto -> GOTO NAME SEMICOLON
+Rule 12    unset -> UNSET L_PAR TVAR R_PAR SEMICOLON
+Rule 13    unset -> UNSET L_PAR AVAR R_PAR SEMICOLON
+Rule 14    unset -> UNSET L_PAR VVAR R_PAR SEMICOLON
+Rule 15    unset -> UNSET L_PAR SVAR R_PAR SEMICOLON
+Rule 16    unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON
+Rule 17    unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON
+Rule 18    print -> PRINT L_PAR TVAR R_PAR SEMICOLON
+Rule 19    print -> PRINT L_PAR AVAR R_PAR SEMICOLON
+Rule 20    print -> PRINT L_PAR VVAR R_PAR SEMICOLON
+Rule 21    print -> PRINT L_PAR SVAR R_PAR SEMICOLON
+Rule 22    print -> PRINT L_PAR SPVAR R_PAR SEMICOLON
+Rule 23    print -> PRINT L_PAR RAVAR R_PAR SEMICOLON
+Rule 24    exit -> EXIT SEMICOLON
+Rule 25    tag -> NAME COLON
+Rule 26    if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+Rule 27    condition -> condition AND condition
+Rule 28    condition -> condition OR condition
+Rule 29    condition -> NOT condition
+Rule 30    condition -> relational
+Rule 31    relational -> arithmetic EQUAL arithmetic
+Rule 32    relational -> arithmetic NOT_EQUAL arithmetic
+Rule 33    relational -> arithmetic GREATER arithmetic
+Rule 34    relational -> arithmetic LESS arithmetic
+Rule 35    relational -> arithmetic GREATER_EQUAL arithmetic
+Rule 36    relational -> arithmetic LESS_EQUAL arithmetic
+Rule 37    relational -> arithmetic
+Rule 38    arithmetic -> arithmetic PLUS arithmetic
+Rule 39    arithmetic -> arithmetic MINUS arithmetic
+Rule 40    arithmetic -> arithmetic MULTIPLY arithmetic
+Rule 41    arithmetic -> arithmetic DIVIDE arithmetic
+Rule 42    arithmetic -> arithmetic REMAINDER arithmetic
+Rule 43    arithmetic -> INTEGER
+Rule 44    arithmetic -> DECIMAL
+Rule 45    arithmetic -> STRING
+Rule 46    arithmetic -> var
+Rule 47    assign -> TVAR ASSIGN arithmetic SEMICOLON
+Rule 48    assign -> AVAR ASSIGN arithmetic SEMICOLON
+Rule 49    assign -> VVAR ASSIGN arithmetic SEMICOLON
+Rule 50    assign -> SVAR ASSIGN arithmetic SEMICOLON
+Rule 51    assign -> TVAR ASSIGN conversion SEMICOLON
+Rule 52    assign -> AVAR ASSIGN conversion SEMICOLON
+Rule 53    assign -> VVAR ASSIGN conversion SEMICOLON
+Rule 54    assign -> SVAR ASSIGN conversion SEMICOLON
+Rule 55    read -> var ASSIGN READ L_PAR R_PAR
+Rule 56    conversion -> L_PAR type R_PAR var
+Rule 57    type -> INT
+Rule 58    type -> FLOAT
+Rule 59    type -> CHAR
+Rule 60    var -> TVAR
+Rule 61    var -> AVAR
+Rule 62    var -> VVAR
+Rule 63    var -> SVAR
+Rule 64    declaration -> TVAR
+Rule 65    declaration -> AVAR
+Rule 66    declaration -> VVAR
+Rule 67    declaration -> SVAR
+Rule 68    declaration -> RAVAR
+Rule 69    declaration -> SPVAR
+Rule 70    declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+Rule 71    declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+Rule 72    declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+Rule 73    declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+Rule 74    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ABS                  : 
+AND                  : 27
+AND_B                : 
+ARRAY                : 70 71 72 73
+ASSIGN               : 47 48 49 50 51 52 53 54 55 70 71 72 73
+AVAR                 : 13 19 48 52 61 65 71
+CHAR                 : 59
+COLON                : 1 25
+COMMA                : 
+COMMENT              : 
+DECIMAL              : 44
+DIVIDE               : 41
+EQUAL                : 31
+EXIT                 : 24
+FLOAT                : 58
+GOTO                 : 11 26
+GREATER              : 33
+GREATER_EQUAL        : 35
+IF                   : 26
+INT                  : 57
+INTEGER              : 43
+LESS                 : 34
+LESS_EQUAL           : 36
+L_BRACKET            : 
+L_PAR                : 12 13 14 15 16 17 18 19 20 21 22 23 26 55 56 70 71 72 73
+MAIN                 : 1
+MINUS                : 39
+MULTIPLY             : 40
+NAME                 : 11 25 26
+NEWLINE              : 
+NOT                  : 29
+NOT_B                : 
+NOT_EQUAL            : 32
+OR                   : 28
+OR_B                 : 
+PLUS                 : 38
+PRINT                : 18 19 20 21 22 23
+QUOTE_1              : 
+QUOTE_2              : 
+RAVAR                : 17 23 68
+READ                 : 55
+REMAINDER            : 42
+R_BRACKET            : 
+R_PAR                : 12 13 14 15 16 17 18 19 20 21 22 23 26 55 56 70 71 72 73
+SEMICOLON            : 11 12 13 14 15 16 17 18 19 20 21 22 23 24 26 47 48 49 50 51 52 53 54 70 71 72 73
+SHIFT_L              : 
+SHIFT_R              : 
+SPVAR                : 16 22 69
+STRING               : 45
+SVAR                 : 15 21 50 54 63 67 73
+TVAR                 : 12 18 47 51 60 64 70
+UNSET                : 12 13 14 15 16 17
+VVAR                 : 14 20 49 53 62 66 72
+XOR                  : 
+XOR_B                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+arithmetic           : 31 31 32 32 33 33 34 34 35 35 36 36 37 38 38 39 39 40 40 41 41 42 42 47 48 49 50
+assign               : 8
+body                 : 1 2 3 4 5 6 7 8 9
+condition            : 26 27 27 28 28 29
+conversion           : 51 52 53 54
+declaration          : 9
+empty                : 10
+exit                 : 5
+goto                 : 2
+if                   : 7
+print                : 4
+read                 : 
+relational           : 30
+start                : 0
+tag                  : 6
+type                 : 56
+unset                : 3
+var                  : 46 55 56
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . start
+    (1) start -> . MAIN COLON body
+
+    MAIN            shift and go to state 2
+
+    start                          shift and go to state 1
+
+state 1
+
+    (0) S' -> start .
+
+
+
+state 2
+
+    (1) start -> MAIN . COLON body
+
+    COLON           shift and go to state 3
+
+
+state 3
+
+    (1) start -> MAIN COLON . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    body                           shift and go to state 4
+    goto                           shift and go to state 5
+    unset                          shift and go to state 6
+    print                          shift and go to state 7
+    exit                           shift and go to state 8
+    tag                            shift and go to state 9
+    if                             shift and go to state 10
+    assign                         shift and go to state 11
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 4
+
+    (1) start -> MAIN COLON body .
+
+    $end            reduce using rule 1 (start -> MAIN COLON body .)
+
+
+state 5
+
+    (2) body -> goto . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    goto                           shift and go to state 5
+    body                           shift and go to state 26
+    unset                          shift and go to state 6
+    print                          shift and go to state 7
+    exit                           shift and go to state 8
+    tag                            shift and go to state 9
+    if                             shift and go to state 10
+    assign                         shift and go to state 11
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 6
+
+    (3) body -> unset . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    unset                          shift and go to state 6
+    body                           shift and go to state 27
+    goto                           shift and go to state 5
+    print                          shift and go to state 7
+    exit                           shift and go to state 8
+    tag                            shift and go to state 9
+    if                             shift and go to state 10
+    assign                         shift and go to state 11
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 7
+
+    (4) body -> print . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    print                          shift and go to state 7
+    body                           shift and go to state 28
+    goto                           shift and go to state 5
+    unset                          shift and go to state 6
+    exit                           shift and go to state 8
+    tag                            shift and go to state 9
+    if                             shift and go to state 10
+    assign                         shift and go to state 11
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 8
+
+    (5) body -> exit . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    exit                           shift and go to state 8
+    body                           shift and go to state 29
+    goto                           shift and go to state 5
+    unset                          shift and go to state 6
+    print                          shift and go to state 7
+    tag                            shift and go to state 9
+    if                             shift and go to state 10
+    assign                         shift and go to state 11
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 9
+
+    (6) body -> tag . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    tag                            shift and go to state 9
+    body                           shift and go to state 30
+    goto                           shift and go to state 5
+    unset                          shift and go to state 6
+    print                          shift and go to state 7
+    exit                           shift and go to state 8
+    if                             shift and go to state 10
+    assign                         shift and go to state 11
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 10
+
+    (7) body -> if . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    if                             shift and go to state 10
+    body                           shift and go to state 31
+    goto                           shift and go to state 5
+    unset                          shift and go to state 6
+    print                          shift and go to state 7
+    exit                           shift and go to state 8
+    tag                            shift and go to state 9
+    assign                         shift and go to state 11
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 11
+
+    (8) body -> assign . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    assign                         shift and go to state 11
+    body                           shift and go to state 32
+    goto                           shift and go to state 5
+    unset                          shift and go to state 6
+    print                          shift and go to state 7
+    exit                           shift and go to state 8
+    tag                            shift and go to state 9
+    if                             shift and go to state 10
+    declaration                    shift and go to state 12
+    empty                          shift and go to state 13
+
+state 12
+
+    (9) body -> declaration . body
+    (2) body -> . goto body
+    (3) body -> . unset body
+    (4) body -> . print body
+    (5) body -> . exit body
+    (6) body -> . tag body
+    (7) body -> . if body
+    (8) body -> . assign body
+    (9) body -> . declaration body
+    (10) body -> . empty
+    (11) goto -> . GOTO NAME SEMICOLON
+    (12) unset -> . UNSET L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> . UNSET L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> . UNSET L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> . UNSET L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> . UNSET L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> . UNSET L_PAR RAVAR R_PAR SEMICOLON
+    (18) print -> . PRINT L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> . PRINT L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> . PRINT L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> . PRINT L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> . PRINT L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> . PRINT L_PAR RAVAR R_PAR SEMICOLON
+    (24) exit -> . EXIT SEMICOLON
+    (25) tag -> . NAME COLON
+    (26) if -> . IF L_PAR condition R_PAR GOTO NAME SEMICOLON
+    (47) assign -> . TVAR ASSIGN arithmetic SEMICOLON
+    (48) assign -> . AVAR ASSIGN arithmetic SEMICOLON
+    (49) assign -> . VVAR ASSIGN arithmetic SEMICOLON
+    (50) assign -> . SVAR ASSIGN arithmetic SEMICOLON
+    (51) assign -> . TVAR ASSIGN conversion SEMICOLON
+    (52) assign -> . AVAR ASSIGN conversion SEMICOLON
+    (53) assign -> . VVAR ASSIGN conversion SEMICOLON
+    (54) assign -> . SVAR ASSIGN conversion SEMICOLON
+    (64) declaration -> . TVAR
+    (65) declaration -> . AVAR
+    (66) declaration -> . VVAR
+    (67) declaration -> . SVAR
+    (68) declaration -> . RAVAR
+    (69) declaration -> . SPVAR
+    (70) declaration -> . TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (71) declaration -> . AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (72) declaration -> . VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (73) declaration -> . SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+    (74) empty -> .
+
+    GOTO            shift and go to state 14
+    UNSET           shift and go to state 16
+    PRINT           shift and go to state 23
+    EXIT            shift and go to state 24
+    NAME            shift and go to state 15
+    IF              shift and go to state 25
+    TVAR            shift and go to state 17
+    AVAR            shift and go to state 18
+    VVAR            shift and go to state 19
+    SVAR            shift and go to state 20
+    RAVAR           shift and go to state 22
+    SPVAR           shift and go to state 21
+    $end            reduce using rule 74 (empty -> .)
+
+    declaration                    shift and go to state 12
+    body                           shift and go to state 33
+    goto                           shift and go to state 5
+    unset                          shift and go to state 6
+    print                          shift and go to state 7
+    exit                           shift and go to state 8
+    tag                            shift and go to state 9
+    if                             shift and go to state 10
+    assign                         shift and go to state 11
+    empty                          shift and go to state 13
+
+state 13
+
+    (10) body -> empty .
+
+    $end            reduce using rule 10 (body -> empty .)
+
+
+state 14
+
+    (11) goto -> GOTO . NAME SEMICOLON
+
+    NAME            shift and go to state 34
+
+
+state 15
+
+    (25) tag -> NAME . COLON
+
+    COLON           shift and go to state 35
+
+
+state 16
+
+    (12) unset -> UNSET . L_PAR TVAR R_PAR SEMICOLON
+    (13) unset -> UNSET . L_PAR AVAR R_PAR SEMICOLON
+    (14) unset -> UNSET . L_PAR VVAR R_PAR SEMICOLON
+    (15) unset -> UNSET . L_PAR SVAR R_PAR SEMICOLON
+    (16) unset -> UNSET . L_PAR SPVAR R_PAR SEMICOLON
+    (17) unset -> UNSET . L_PAR RAVAR R_PAR SEMICOLON
+
+    L_PAR           shift and go to state 36
+
+
+state 17
+
+    (47) assign -> TVAR . ASSIGN arithmetic SEMICOLON
+    (51) assign -> TVAR . ASSIGN conversion SEMICOLON
+    (64) declaration -> TVAR .
+    (70) declaration -> TVAR . ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+
+    ASSIGN          shift and go to state 37
+    GOTO            reduce using rule 64 (declaration -> TVAR .)
+    UNSET           reduce using rule 64 (declaration -> TVAR .)
+    PRINT           reduce using rule 64 (declaration -> TVAR .)
+    EXIT            reduce using rule 64 (declaration -> TVAR .)
+    NAME            reduce using rule 64 (declaration -> TVAR .)
+    IF              reduce using rule 64 (declaration -> TVAR .)
+    TVAR            reduce using rule 64 (declaration -> TVAR .)
+    AVAR            reduce using rule 64 (declaration -> TVAR .)
+    VVAR            reduce using rule 64 (declaration -> TVAR .)
+    SVAR            reduce using rule 64 (declaration -> TVAR .)
+    RAVAR           reduce using rule 64 (declaration -> TVAR .)
+    SPVAR           reduce using rule 64 (declaration -> TVAR .)
+    $end            reduce using rule 64 (declaration -> TVAR .)
+
+
+state 18
+
+    (48) assign -> AVAR . ASSIGN arithmetic SEMICOLON
+    (52) assign -> AVAR . ASSIGN conversion SEMICOLON
+    (65) declaration -> AVAR .
+    (71) declaration -> AVAR . ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+
+    ASSIGN          shift and go to state 38
+    GOTO            reduce using rule 65 (declaration -> AVAR .)
+    UNSET           reduce using rule 65 (declaration -> AVAR .)
+    PRINT           reduce using rule 65 (declaration -> AVAR .)
+    EXIT            reduce using rule 65 (declaration -> AVAR .)
+    NAME            reduce using rule 65 (declaration -> AVAR .)
+    IF              reduce using rule 65 (declaration -> AVAR .)
+    TVAR            reduce using rule 65 (declaration -> AVAR .)
+    AVAR            reduce using rule 65 (declaration -> AVAR .)
+    VVAR            reduce using rule 65 (declaration -> AVAR .)
+    SVAR            reduce using rule 65 (declaration -> AVAR .)
+    RAVAR           reduce using rule 65 (declaration -> AVAR .)
+    SPVAR           reduce using rule 65 (declaration -> AVAR .)
+    $end            reduce using rule 65 (declaration -> AVAR .)
+
+
+state 19
+
+    (49) assign -> VVAR . ASSIGN arithmetic SEMICOLON
+    (53) assign -> VVAR . ASSIGN conversion SEMICOLON
+    (66) declaration -> VVAR .
+    (72) declaration -> VVAR . ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+
+    ASSIGN          shift and go to state 39
+    GOTO            reduce using rule 66 (declaration -> VVAR .)
+    UNSET           reduce using rule 66 (declaration -> VVAR .)
+    PRINT           reduce using rule 66 (declaration -> VVAR .)
+    EXIT            reduce using rule 66 (declaration -> VVAR .)
+    NAME            reduce using rule 66 (declaration -> VVAR .)
+    IF              reduce using rule 66 (declaration -> VVAR .)
+    TVAR            reduce using rule 66 (declaration -> VVAR .)
+    AVAR            reduce using rule 66 (declaration -> VVAR .)
+    VVAR            reduce using rule 66 (declaration -> VVAR .)
+    SVAR            reduce using rule 66 (declaration -> VVAR .)
+    RAVAR           reduce using rule 66 (declaration -> VVAR .)
+    SPVAR           reduce using rule 66 (declaration -> VVAR .)
+    $end            reduce using rule 66 (declaration -> VVAR .)
+
+
+state 20
+
+    (50) assign -> SVAR . ASSIGN arithmetic SEMICOLON
+    (54) assign -> SVAR . ASSIGN conversion SEMICOLON
+    (67) declaration -> SVAR .
+    (73) declaration -> SVAR . ASSIGN ARRAY L_PAR R_PAR SEMICOLON
+
+    ASSIGN          shift and go to state 40
+    GOTO            reduce using rule 67 (declaration -> SVAR .)
+    UNSET           reduce using rule 67 (declaration -> SVAR .)
+    PRINT           reduce using rule 67 (declaration -> SVAR .)
+    EXIT            reduce using rule 67 (declaration -> SVAR .)
+    NAME            reduce using rule 67 (declaration -> SVAR .)
+    IF              reduce using rule 67 (declaration -> SVAR .)
+    TVAR            reduce using rule 67 (declaration -> SVAR .)
+    AVAR            reduce using rule 67 (declaration -> SVAR .)
+    VVAR            reduce using rule 67 (declaration -> SVAR .)
+    SVAR            reduce using rule 67 (declaration -> SVAR .)
+    RAVAR           reduce using rule 67 (declaration -> SVAR .)
+    SPVAR           reduce using rule 67 (declaration -> SVAR .)
+    $end            reduce using rule 67 (declaration -> SVAR .)
+
+
+state 21
+
+    (69) declaration -> SPVAR .
+
+    GOTO            reduce using rule 69 (declaration -> SPVAR .)
+    UNSET           reduce using rule 69 (declaration -> SPVAR .)
+    PRINT           reduce using rule 69 (declaration -> SPVAR .)
+    EXIT            reduce using rule 69 (declaration -> SPVAR .)
+    NAME            reduce using rule 69 (declaration -> SPVAR .)
+    IF              reduce using rule 69 (declaration -> SPVAR .)
+    TVAR            reduce using rule 69 (declaration -> SPVAR .)
+    AVAR            reduce using rule 69 (declaration -> SPVAR .)
+    VVAR            reduce using rule 69 (declaration -> SPVAR .)
+    SVAR            reduce using rule 69 (declaration -> SPVAR .)
+    RAVAR           reduce using rule 69 (declaration -> SPVAR .)
+    SPVAR           reduce using rule 69 (declaration -> SPVAR .)
+    $end            reduce using rule 69 (declaration -> SPVAR .)
+
+
+state 22
+
+    (68) declaration -> RAVAR .
+
+    GOTO            reduce using rule 68 (declaration -> RAVAR .)
+    UNSET           reduce using rule 68 (declaration -> RAVAR .)
+    PRINT           reduce using rule 68 (declaration -> RAVAR .)
+    EXIT            reduce using rule 68 (declaration -> RAVAR .)
+    NAME            reduce using rule 68 (declaration -> RAVAR .)
+    IF              reduce using rule 68 (declaration -> RAVAR .)
+    TVAR            reduce using rule 68 (declaration -> RAVAR .)
+    AVAR            reduce using rule 68 (declaration -> RAVAR .)
+    VVAR            reduce using rule 68 (declaration -> RAVAR .)
+    SVAR            reduce using rule 68 (declaration -> RAVAR .)
+    RAVAR           reduce using rule 68 (declaration -> RAVAR .)
+    SPVAR           reduce using rule 68 (declaration -> RAVAR .)
+    $end            reduce using rule 68 (declaration -> RAVAR .)
+
+
+state 23
+
+    (18) print -> PRINT . L_PAR TVAR R_PAR SEMICOLON
+    (19) print -> PRINT . L_PAR AVAR R_PAR SEMICOLON
+    (20) print -> PRINT . L_PAR VVAR R_PAR SEMICOLON
+    (21) print -> PRINT . L_PAR SVAR R_PAR SEMICOLON
+    (22) print -> PRINT . L_PAR SPVAR R_PAR SEMICOLON
+    (23) print -> PRINT . L_PAR RAVAR R_PAR SEMICOLON
+
+    L_PAR           shift and go to state 41
+
+
+state 24
+
+    (24) exit -> EXIT . SEMICOLON
+
+    SEMICOLON       shift and go to state 42
+
+
+state 25
+
+    (26) if -> IF . L_PAR condition R_PAR GOTO NAME SEMICOLON
+
+    L_PAR           shift and go to state 43
+
+
+state 26
+
+    (2) body -> goto body .
+
+    $end            reduce using rule 2 (body -> goto body .)
+
+
+state 27
+
+    (3) body -> unset body .
+
+    $end            reduce using rule 3 (body -> unset body .)
+
+
+state 28
+
+    (4) body -> print body .
+
+    $end            reduce using rule 4 (body -> print body .)
+
+
+state 29
+
+    (5) body -> exit body .
+
+    $end            reduce using rule 5 (body -> exit body .)
+
+
+state 30
+
+    (6) body -> tag body .
+
+    $end            reduce using rule 6 (body -> tag body .)
+
+
+state 31
+
+    (7) body -> if body .
+
+    $end            reduce using rule 7 (body -> if body .)
+
+
+state 32
+
+    (8) body -> assign body .
+
+    $end            reduce using rule 8 (body -> assign body .)
+
+
+state 33
+
+    (9) body -> declaration body .
+
+    $end            reduce using rule 9 (body -> declaration body .)
+
+
+state 34
+
+    (11) goto -> GOTO NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 44
+
+
+state 35
+
+    (25) tag -> NAME COLON .
+
+    GOTO            reduce using rule 25 (tag -> NAME COLON .)
+    UNSET           reduce using rule 25 (tag -> NAME COLON .)
+    PRINT           reduce using rule 25 (tag -> NAME COLON .)
+    EXIT            reduce using rule 25 (tag -> NAME COLON .)
+    NAME            reduce using rule 25 (tag -> NAME COLON .)
+    IF              reduce using rule 25 (tag -> NAME COLON .)
+    TVAR            reduce using rule 25 (tag -> NAME COLON .)
+    AVAR            reduce using rule 25 (tag -> NAME COLON .)
+    VVAR            reduce using rule 25 (tag -> NAME COLON .)
+    SVAR            reduce using rule 25 (tag -> NAME COLON .)
+    RAVAR           reduce using rule 25 (tag -> NAME COLON .)
+    SPVAR           reduce using rule 25 (tag -> NAME COLON .)
+    $end            reduce using rule 25 (tag -> NAME COLON .)
+
+
+state 36
+
+    (12) unset -> UNSET L_PAR . TVAR R_PAR SEMICOLON
+    (13) unset -> UNSET L_PAR . AVAR R_PAR SEMICOLON
+    (14) unset -> UNSET L_PAR . VVAR R_PAR SEMICOLON
+    (15) unset -> UNSET L_PAR . SVAR R_PAR SEMICOLON
+    (16) unset -> UNSET L_PAR . SPVAR R_PAR SEMICOLON
+    (17) unset -> UNSET L_PAR . RAVAR R_PAR SEMICOLON
+
+    TVAR            shift and go to state 45
+    AVAR            shift and go to state 46
+    VVAR            shift and go to state 47
+    SVAR            shift and go to state 48
+    SPVAR           shift and go to state 49
+    RAVAR           shift and go to state 50
+
+
+state 37
+
+    (47) assign -> TVAR ASSIGN . arithmetic SEMICOLON
+    (51) assign -> TVAR ASSIGN . conversion SEMICOLON
+    (70) declaration -> TVAR ASSIGN . ARRAY L_PAR R_PAR SEMICOLON
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (56) conversion -> . L_PAR type R_PAR var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    ARRAY           shift and go to state 54
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    L_PAR           shift and go to state 55
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 52
+    conversion                     shift and go to state 53
+    var                            shift and go to state 59
+
+state 38
+
+    (48) assign -> AVAR ASSIGN . arithmetic SEMICOLON
+    (52) assign -> AVAR ASSIGN . conversion SEMICOLON
+    (71) declaration -> AVAR ASSIGN . ARRAY L_PAR R_PAR SEMICOLON
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (56) conversion -> . L_PAR type R_PAR var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    ARRAY           shift and go to state 65
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    L_PAR           shift and go to state 55
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 63
+    conversion                     shift and go to state 64
+    var                            shift and go to state 59
+
+state 39
+
+    (49) assign -> VVAR ASSIGN . arithmetic SEMICOLON
+    (53) assign -> VVAR ASSIGN . conversion SEMICOLON
+    (72) declaration -> VVAR ASSIGN . ARRAY L_PAR R_PAR SEMICOLON
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (56) conversion -> . L_PAR type R_PAR var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    ARRAY           shift and go to state 68
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    L_PAR           shift and go to state 55
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 66
+    conversion                     shift and go to state 67
+    var                            shift and go to state 59
+
+state 40
+
+    (50) assign -> SVAR ASSIGN . arithmetic SEMICOLON
+    (54) assign -> SVAR ASSIGN . conversion SEMICOLON
+    (73) declaration -> SVAR ASSIGN . ARRAY L_PAR R_PAR SEMICOLON
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (56) conversion -> . L_PAR type R_PAR var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    ARRAY           shift and go to state 71
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    L_PAR           shift and go to state 55
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 69
+    conversion                     shift and go to state 70
+    var                            shift and go to state 59
+
+state 41
+
+    (18) print -> PRINT L_PAR . TVAR R_PAR SEMICOLON
+    (19) print -> PRINT L_PAR . AVAR R_PAR SEMICOLON
+    (20) print -> PRINT L_PAR . VVAR R_PAR SEMICOLON
+    (21) print -> PRINT L_PAR . SVAR R_PAR SEMICOLON
+    (22) print -> PRINT L_PAR . SPVAR R_PAR SEMICOLON
+    (23) print -> PRINT L_PAR . RAVAR R_PAR SEMICOLON
+
+    TVAR            shift and go to state 72
+    AVAR            shift and go to state 73
+    VVAR            shift and go to state 74
+    SVAR            shift and go to state 75
+    SPVAR           shift and go to state 76
+    RAVAR           shift and go to state 77
+
+
+state 42
+
+    (24) exit -> EXIT SEMICOLON .
+
+    GOTO            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    UNSET           reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    PRINT           reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    EXIT            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    NAME            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    IF              reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    TVAR            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    AVAR            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    VVAR            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    SVAR            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    RAVAR           reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    SPVAR           reduce using rule 24 (exit -> EXIT SEMICOLON .)
+    $end            reduce using rule 24 (exit -> EXIT SEMICOLON .)
+
+
+state 43
+
+    (26) if -> IF L_PAR . condition R_PAR GOTO NAME SEMICOLON
+    (27) condition -> . condition AND condition
+    (28) condition -> . condition OR condition
+    (29) condition -> . NOT condition
+    (30) condition -> . relational
+    (31) relational -> . arithmetic EQUAL arithmetic
+    (32) relational -> . arithmetic NOT_EQUAL arithmetic
+    (33) relational -> . arithmetic GREATER arithmetic
+    (34) relational -> . arithmetic LESS arithmetic
+    (35) relational -> . arithmetic GREATER_EQUAL arithmetic
+    (36) relational -> . arithmetic LESS_EQUAL arithmetic
+    (37) relational -> . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    NOT             shift and go to state 79
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    condition                      shift and go to state 78
+    relational                     shift and go to state 80
+    arithmetic                     shift and go to state 81
+    var                            shift and go to state 59
+
+state 44
+
+    (11) goto -> GOTO NAME SEMICOLON .
+
+    GOTO            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    UNSET           reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    PRINT           reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    EXIT            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    NAME            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    IF              reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    TVAR            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    AVAR            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    VVAR            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    SVAR            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    RAVAR           reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    SPVAR           reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+    $end            reduce using rule 11 (goto -> GOTO NAME SEMICOLON .)
+
+
+state 45
+
+    (12) unset -> UNSET L_PAR TVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 82
+
+
+state 46
+
+    (13) unset -> UNSET L_PAR AVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 83
+
+
+state 47
+
+    (14) unset -> UNSET L_PAR VVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 84
+
+
+state 48
+
+    (15) unset -> UNSET L_PAR SVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 85
+
+
+state 49
+
+    (16) unset -> UNSET L_PAR SPVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 86
+
+
+state 50
+
+    (17) unset -> UNSET L_PAR RAVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 87
+
+
+state 51
+
+    (60) var -> TVAR .
+
+    SEMICOLON       reduce using rule 60 (var -> TVAR .)
+    PLUS            reduce using rule 60 (var -> TVAR .)
+    MINUS           reduce using rule 60 (var -> TVAR .)
+    MULTIPLY        reduce using rule 60 (var -> TVAR .)
+    DIVIDE          reduce using rule 60 (var -> TVAR .)
+    REMAINDER       reduce using rule 60 (var -> TVAR .)
+    EQUAL           reduce using rule 60 (var -> TVAR .)
+    NOT_EQUAL       reduce using rule 60 (var -> TVAR .)
+    GREATER         reduce using rule 60 (var -> TVAR .)
+    LESS            reduce using rule 60 (var -> TVAR .)
+    GREATER_EQUAL   reduce using rule 60 (var -> TVAR .)
+    LESS_EQUAL      reduce using rule 60 (var -> TVAR .)
+    R_PAR           reduce using rule 60 (var -> TVAR .)
+    AND             reduce using rule 60 (var -> TVAR .)
+    OR              reduce using rule 60 (var -> TVAR .)
+
+
+state 52
+
+    (47) assign -> TVAR ASSIGN arithmetic . SEMICOLON
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       shift and go to state 88
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 53
+
+    (51) assign -> TVAR ASSIGN conversion . SEMICOLON
+
+    SEMICOLON       shift and go to state 94
+
+
+state 54
+
+    (70) declaration -> TVAR ASSIGN ARRAY . L_PAR R_PAR SEMICOLON
+
+    L_PAR           shift and go to state 95
+
+
+state 55
+
+    (56) conversion -> L_PAR . type R_PAR var
+    (57) type -> . INT
+    (58) type -> . FLOAT
+    (59) type -> . CHAR
+
+    INT             shift and go to state 97
+    FLOAT           shift and go to state 98
+    CHAR            shift and go to state 99
+
+    type                           shift and go to state 96
+
+state 56
+
+    (43) arithmetic -> INTEGER .
+
+    SEMICOLON       reduce using rule 43 (arithmetic -> INTEGER .)
+    PLUS            reduce using rule 43 (arithmetic -> INTEGER .)
+    MINUS           reduce using rule 43 (arithmetic -> INTEGER .)
+    MULTIPLY        reduce using rule 43 (arithmetic -> INTEGER .)
+    DIVIDE          reduce using rule 43 (arithmetic -> INTEGER .)
+    REMAINDER       reduce using rule 43 (arithmetic -> INTEGER .)
+    EQUAL           reduce using rule 43 (arithmetic -> INTEGER .)
+    NOT_EQUAL       reduce using rule 43 (arithmetic -> INTEGER .)
+    GREATER         reduce using rule 43 (arithmetic -> INTEGER .)
+    LESS            reduce using rule 43 (arithmetic -> INTEGER .)
+    GREATER_EQUAL   reduce using rule 43 (arithmetic -> INTEGER .)
+    LESS_EQUAL      reduce using rule 43 (arithmetic -> INTEGER .)
+    R_PAR           reduce using rule 43 (arithmetic -> INTEGER .)
+    AND             reduce using rule 43 (arithmetic -> INTEGER .)
+    OR              reduce using rule 43 (arithmetic -> INTEGER .)
+
+
+state 57
+
+    (44) arithmetic -> DECIMAL .
+
+    SEMICOLON       reduce using rule 44 (arithmetic -> DECIMAL .)
+    PLUS            reduce using rule 44 (arithmetic -> DECIMAL .)
+    MINUS           reduce using rule 44 (arithmetic -> DECIMAL .)
+    MULTIPLY        reduce using rule 44 (arithmetic -> DECIMAL .)
+    DIVIDE          reduce using rule 44 (arithmetic -> DECIMAL .)
+    REMAINDER       reduce using rule 44 (arithmetic -> DECIMAL .)
+    EQUAL           reduce using rule 44 (arithmetic -> DECIMAL .)
+    NOT_EQUAL       reduce using rule 44 (arithmetic -> DECIMAL .)
+    GREATER         reduce using rule 44 (arithmetic -> DECIMAL .)
+    LESS            reduce using rule 44 (arithmetic -> DECIMAL .)
+    GREATER_EQUAL   reduce using rule 44 (arithmetic -> DECIMAL .)
+    LESS_EQUAL      reduce using rule 44 (arithmetic -> DECIMAL .)
+    R_PAR           reduce using rule 44 (arithmetic -> DECIMAL .)
+    AND             reduce using rule 44 (arithmetic -> DECIMAL .)
+    OR              reduce using rule 44 (arithmetic -> DECIMAL .)
+
+
+state 58
+
+    (45) arithmetic -> STRING .
+
+    SEMICOLON       reduce using rule 45 (arithmetic -> STRING .)
+    PLUS            reduce using rule 45 (arithmetic -> STRING .)
+    MINUS           reduce using rule 45 (arithmetic -> STRING .)
+    MULTIPLY        reduce using rule 45 (arithmetic -> STRING .)
+    DIVIDE          reduce using rule 45 (arithmetic -> STRING .)
+    REMAINDER       reduce using rule 45 (arithmetic -> STRING .)
+    EQUAL           reduce using rule 45 (arithmetic -> STRING .)
+    NOT_EQUAL       reduce using rule 45 (arithmetic -> STRING .)
+    GREATER         reduce using rule 45 (arithmetic -> STRING .)
+    LESS            reduce using rule 45 (arithmetic -> STRING .)
+    GREATER_EQUAL   reduce using rule 45 (arithmetic -> STRING .)
+    LESS_EQUAL      reduce using rule 45 (arithmetic -> STRING .)
+    R_PAR           reduce using rule 45 (arithmetic -> STRING .)
+    AND             reduce using rule 45 (arithmetic -> STRING .)
+    OR              reduce using rule 45 (arithmetic -> STRING .)
+
+
+state 59
+
+    (46) arithmetic -> var .
+
+    SEMICOLON       reduce using rule 46 (arithmetic -> var .)
+    PLUS            reduce using rule 46 (arithmetic -> var .)
+    MINUS           reduce using rule 46 (arithmetic -> var .)
+    MULTIPLY        reduce using rule 46 (arithmetic -> var .)
+    DIVIDE          reduce using rule 46 (arithmetic -> var .)
+    REMAINDER       reduce using rule 46 (arithmetic -> var .)
+    EQUAL           reduce using rule 46 (arithmetic -> var .)
+    NOT_EQUAL       reduce using rule 46 (arithmetic -> var .)
+    GREATER         reduce using rule 46 (arithmetic -> var .)
+    LESS            reduce using rule 46 (arithmetic -> var .)
+    GREATER_EQUAL   reduce using rule 46 (arithmetic -> var .)
+    LESS_EQUAL      reduce using rule 46 (arithmetic -> var .)
+    R_PAR           reduce using rule 46 (arithmetic -> var .)
+    AND             reduce using rule 46 (arithmetic -> var .)
+    OR              reduce using rule 46 (arithmetic -> var .)
+
+
+state 60
+
+    (61) var -> AVAR .
+
+    SEMICOLON       reduce using rule 61 (var -> AVAR .)
+    PLUS            reduce using rule 61 (var -> AVAR .)
+    MINUS           reduce using rule 61 (var -> AVAR .)
+    MULTIPLY        reduce using rule 61 (var -> AVAR .)
+    DIVIDE          reduce using rule 61 (var -> AVAR .)
+    REMAINDER       reduce using rule 61 (var -> AVAR .)
+    EQUAL           reduce using rule 61 (var -> AVAR .)
+    NOT_EQUAL       reduce using rule 61 (var -> AVAR .)
+    GREATER         reduce using rule 61 (var -> AVAR .)
+    LESS            reduce using rule 61 (var -> AVAR .)
+    GREATER_EQUAL   reduce using rule 61 (var -> AVAR .)
+    LESS_EQUAL      reduce using rule 61 (var -> AVAR .)
+    R_PAR           reduce using rule 61 (var -> AVAR .)
+    AND             reduce using rule 61 (var -> AVAR .)
+    OR              reduce using rule 61 (var -> AVAR .)
+
+
+state 61
+
+    (62) var -> VVAR .
+
+    SEMICOLON       reduce using rule 62 (var -> VVAR .)
+    PLUS            reduce using rule 62 (var -> VVAR .)
+    MINUS           reduce using rule 62 (var -> VVAR .)
+    MULTIPLY        reduce using rule 62 (var -> VVAR .)
+    DIVIDE          reduce using rule 62 (var -> VVAR .)
+    REMAINDER       reduce using rule 62 (var -> VVAR .)
+    EQUAL           reduce using rule 62 (var -> VVAR .)
+    NOT_EQUAL       reduce using rule 62 (var -> VVAR .)
+    GREATER         reduce using rule 62 (var -> VVAR .)
+    LESS            reduce using rule 62 (var -> VVAR .)
+    GREATER_EQUAL   reduce using rule 62 (var -> VVAR .)
+    LESS_EQUAL      reduce using rule 62 (var -> VVAR .)
+    R_PAR           reduce using rule 62 (var -> VVAR .)
+    AND             reduce using rule 62 (var -> VVAR .)
+    OR              reduce using rule 62 (var -> VVAR .)
+
+
+state 62
+
+    (63) var -> SVAR .
+
+    SEMICOLON       reduce using rule 63 (var -> SVAR .)
+    PLUS            reduce using rule 63 (var -> SVAR .)
+    MINUS           reduce using rule 63 (var -> SVAR .)
+    MULTIPLY        reduce using rule 63 (var -> SVAR .)
+    DIVIDE          reduce using rule 63 (var -> SVAR .)
+    REMAINDER       reduce using rule 63 (var -> SVAR .)
+    EQUAL           reduce using rule 63 (var -> SVAR .)
+    NOT_EQUAL       reduce using rule 63 (var -> SVAR .)
+    GREATER         reduce using rule 63 (var -> SVAR .)
+    LESS            reduce using rule 63 (var -> SVAR .)
+    GREATER_EQUAL   reduce using rule 63 (var -> SVAR .)
+    LESS_EQUAL      reduce using rule 63 (var -> SVAR .)
+    R_PAR           reduce using rule 63 (var -> SVAR .)
+    AND             reduce using rule 63 (var -> SVAR .)
+    OR              reduce using rule 63 (var -> SVAR .)
+
+
+state 63
+
+    (48) assign -> AVAR ASSIGN arithmetic . SEMICOLON
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       shift and go to state 100
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 64
+
+    (52) assign -> AVAR ASSIGN conversion . SEMICOLON
+
+    SEMICOLON       shift and go to state 101
+
+
+state 65
+
+    (71) declaration -> AVAR ASSIGN ARRAY . L_PAR R_PAR SEMICOLON
+
+    L_PAR           shift and go to state 102
+
+
+state 66
+
+    (49) assign -> VVAR ASSIGN arithmetic . SEMICOLON
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       shift and go to state 103
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 67
+
+    (53) assign -> VVAR ASSIGN conversion . SEMICOLON
+
+    SEMICOLON       shift and go to state 104
+
+
+state 68
+
+    (72) declaration -> VVAR ASSIGN ARRAY . L_PAR R_PAR SEMICOLON
+
+    L_PAR           shift and go to state 105
+
+
+state 69
+
+    (50) assign -> SVAR ASSIGN arithmetic . SEMICOLON
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       shift and go to state 106
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 70
+
+    (54) assign -> SVAR ASSIGN conversion . SEMICOLON
+
+    SEMICOLON       shift and go to state 107
+
+
+state 71
+
+    (73) declaration -> SVAR ASSIGN ARRAY . L_PAR R_PAR SEMICOLON
+
+    L_PAR           shift and go to state 108
+
+
+state 72
+
+    (18) print -> PRINT L_PAR TVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 109
+
+
+state 73
+
+    (19) print -> PRINT L_PAR AVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 110
+
+
+state 74
+
+    (20) print -> PRINT L_PAR VVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 111
+
+
+state 75
+
+    (21) print -> PRINT L_PAR SVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 112
+
+
+state 76
+
+    (22) print -> PRINT L_PAR SPVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 113
+
+
+state 77
+
+    (23) print -> PRINT L_PAR RAVAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 114
+
+
+state 78
+
+    (26) if -> IF L_PAR condition . R_PAR GOTO NAME SEMICOLON
+    (27) condition -> condition . AND condition
+    (28) condition -> condition . OR condition
+
+    R_PAR           shift and go to state 115
+    AND             shift and go to state 116
+    OR              shift and go to state 117
+
+
+state 79
+
+    (29) condition -> NOT . condition
+    (27) condition -> . condition AND condition
+    (28) condition -> . condition OR condition
+    (29) condition -> . NOT condition
+    (30) condition -> . relational
+    (31) relational -> . arithmetic EQUAL arithmetic
+    (32) relational -> . arithmetic NOT_EQUAL arithmetic
+    (33) relational -> . arithmetic GREATER arithmetic
+    (34) relational -> . arithmetic LESS arithmetic
+    (35) relational -> . arithmetic GREATER_EQUAL arithmetic
+    (36) relational -> . arithmetic LESS_EQUAL arithmetic
+    (37) relational -> . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    NOT             shift and go to state 79
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    condition                      shift and go to state 118
+    relational                     shift and go to state 80
+    arithmetic                     shift and go to state 81
+    var                            shift and go to state 59
+
+state 80
+
+    (30) condition -> relational .
+
+    R_PAR           reduce using rule 30 (condition -> relational .)
+    AND             reduce using rule 30 (condition -> relational .)
+    OR              reduce using rule 30 (condition -> relational .)
+
+
+state 81
+
+    (31) relational -> arithmetic . EQUAL arithmetic
+    (32) relational -> arithmetic . NOT_EQUAL arithmetic
+    (33) relational -> arithmetic . GREATER arithmetic
+    (34) relational -> arithmetic . LESS arithmetic
+    (35) relational -> arithmetic . GREATER_EQUAL arithmetic
+    (36) relational -> arithmetic . LESS_EQUAL arithmetic
+    (37) relational -> arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    EQUAL           shift and go to state 119
+    NOT_EQUAL       shift and go to state 120
+    GREATER         shift and go to state 121
+    LESS            shift and go to state 122
+    GREATER_EQUAL   shift and go to state 123
+    LESS_EQUAL      shift and go to state 124
+    R_PAR           reduce using rule 37 (relational -> arithmetic .)
+    AND             reduce using rule 37 (relational -> arithmetic .)
+    OR              reduce using rule 37 (relational -> arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 82
+
+    (12) unset -> UNSET L_PAR TVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 125
+
+
+state 83
+
+    (13) unset -> UNSET L_PAR AVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 126
+
+
+state 84
+
+    (14) unset -> UNSET L_PAR VVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 127
+
+
+state 85
+
+    (15) unset -> UNSET L_PAR SVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 128
+
+
+state 86
+
+    (16) unset -> UNSET L_PAR SPVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 129
+
+
+state 87
+
+    (17) unset -> UNSET L_PAR RAVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 130
+
+
+state 88
+
+    (47) assign -> TVAR ASSIGN arithmetic SEMICOLON .
+
+    GOTO            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    UNSET           reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    PRINT           reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    EXIT            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    NAME            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    IF              reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    TVAR            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    AVAR            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    VVAR            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    SVAR            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    RAVAR           reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    SPVAR           reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+    $end            reduce using rule 47 (assign -> TVAR ASSIGN arithmetic SEMICOLON .)
+
+
+state 89
+
+    (38) arithmetic -> arithmetic PLUS . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 131
+    var                            shift and go to state 59
+
+state 90
+
+    (39) arithmetic -> arithmetic MINUS . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 132
+    var                            shift and go to state 59
+
+state 91
+
+    (40) arithmetic -> arithmetic MULTIPLY . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 133
+    var                            shift and go to state 59
+
+state 92
+
+    (41) arithmetic -> arithmetic DIVIDE . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 134
+    var                            shift and go to state 59
+
+state 93
+
+    (42) arithmetic -> arithmetic REMAINDER . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 135
+    var                            shift and go to state 59
+
+state 94
+
+    (51) assign -> TVAR ASSIGN conversion SEMICOLON .
+
+    GOTO            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    UNSET           reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    PRINT           reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    EXIT            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    NAME            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    IF              reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    TVAR            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    AVAR            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    VVAR            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    SVAR            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    RAVAR           reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    SPVAR           reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+    $end            reduce using rule 51 (assign -> TVAR ASSIGN conversion SEMICOLON .)
+
+
+state 95
+
+    (70) declaration -> TVAR ASSIGN ARRAY L_PAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 136
+
+
+state 96
+
+    (56) conversion -> L_PAR type . R_PAR var
+
+    R_PAR           shift and go to state 137
+
+
+state 97
+
+    (57) type -> INT .
+
+    R_PAR           reduce using rule 57 (type -> INT .)
+
+
+state 98
+
+    (58) type -> FLOAT .
+
+    R_PAR           reduce using rule 58 (type -> FLOAT .)
+
+
+state 99
+
+    (59) type -> CHAR .
+
+    R_PAR           reduce using rule 59 (type -> CHAR .)
+
+
+state 100
+
+    (48) assign -> AVAR ASSIGN arithmetic SEMICOLON .
+
+    GOTO            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    UNSET           reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    PRINT           reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    EXIT            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    NAME            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    IF              reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    TVAR            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    AVAR            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    VVAR            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    SVAR            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    RAVAR           reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    SPVAR           reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+    $end            reduce using rule 48 (assign -> AVAR ASSIGN arithmetic SEMICOLON .)
+
+
+state 101
+
+    (52) assign -> AVAR ASSIGN conversion SEMICOLON .
+
+    GOTO            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    UNSET           reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    PRINT           reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    EXIT            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    NAME            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    IF              reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    TVAR            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    AVAR            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    VVAR            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    SVAR            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    RAVAR           reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    SPVAR           reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+    $end            reduce using rule 52 (assign -> AVAR ASSIGN conversion SEMICOLON .)
+
+
+state 102
+
+    (71) declaration -> AVAR ASSIGN ARRAY L_PAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 138
+
+
+state 103
+
+    (49) assign -> VVAR ASSIGN arithmetic SEMICOLON .
+
+    GOTO            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    UNSET           reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    PRINT           reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    EXIT            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    NAME            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    IF              reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    TVAR            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    AVAR            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    VVAR            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    SVAR            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    RAVAR           reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    SPVAR           reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+    $end            reduce using rule 49 (assign -> VVAR ASSIGN arithmetic SEMICOLON .)
+
+
+state 104
+
+    (53) assign -> VVAR ASSIGN conversion SEMICOLON .
+
+    GOTO            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    UNSET           reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    PRINT           reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    EXIT            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    NAME            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    IF              reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    TVAR            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    AVAR            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    VVAR            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    SVAR            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    RAVAR           reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    SPVAR           reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+    $end            reduce using rule 53 (assign -> VVAR ASSIGN conversion SEMICOLON .)
+
+
+state 105
+
+    (72) declaration -> VVAR ASSIGN ARRAY L_PAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 139
+
+
+state 106
+
+    (50) assign -> SVAR ASSIGN arithmetic SEMICOLON .
+
+    GOTO            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    UNSET           reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    PRINT           reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    EXIT            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    NAME            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    IF              reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    TVAR            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    AVAR            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    VVAR            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    SVAR            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    RAVAR           reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    SPVAR           reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+    $end            reduce using rule 50 (assign -> SVAR ASSIGN arithmetic SEMICOLON .)
+
+
+state 107
+
+    (54) assign -> SVAR ASSIGN conversion SEMICOLON .
+
+    GOTO            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    UNSET           reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    PRINT           reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    EXIT            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    NAME            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    IF              reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    TVAR            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    AVAR            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    VVAR            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    SVAR            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    RAVAR           reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    SPVAR           reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+    $end            reduce using rule 54 (assign -> SVAR ASSIGN conversion SEMICOLON .)
+
+
+state 108
+
+    (73) declaration -> SVAR ASSIGN ARRAY L_PAR . R_PAR SEMICOLON
+
+    R_PAR           shift and go to state 140
+
+
+state 109
+
+    (18) print -> PRINT L_PAR TVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 141
+
+
+state 110
+
+    (19) print -> PRINT L_PAR AVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 142
+
+
+state 111
+
+    (20) print -> PRINT L_PAR VVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 143
+
+
+state 112
+
+    (21) print -> PRINT L_PAR SVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 144
+
+
+state 113
+
+    (22) print -> PRINT L_PAR SPVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 145
+
+
+state 114
+
+    (23) print -> PRINT L_PAR RAVAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 146
+
+
+state 115
+
+    (26) if -> IF L_PAR condition R_PAR . GOTO NAME SEMICOLON
+
+    GOTO            shift and go to state 147
+
+
+state 116
+
+    (27) condition -> condition AND . condition
+    (27) condition -> . condition AND condition
+    (28) condition -> . condition OR condition
+    (29) condition -> . NOT condition
+    (30) condition -> . relational
+    (31) relational -> . arithmetic EQUAL arithmetic
+    (32) relational -> . arithmetic NOT_EQUAL arithmetic
+    (33) relational -> . arithmetic GREATER arithmetic
+    (34) relational -> . arithmetic LESS arithmetic
+    (35) relational -> . arithmetic GREATER_EQUAL arithmetic
+    (36) relational -> . arithmetic LESS_EQUAL arithmetic
+    (37) relational -> . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    NOT             shift and go to state 79
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    condition                      shift and go to state 148
+    relational                     shift and go to state 80
+    arithmetic                     shift and go to state 81
+    var                            shift and go to state 59
+
+state 117
+
+    (28) condition -> condition OR . condition
+    (27) condition -> . condition AND condition
+    (28) condition -> . condition OR condition
+    (29) condition -> . NOT condition
+    (30) condition -> . relational
+    (31) relational -> . arithmetic EQUAL arithmetic
+    (32) relational -> . arithmetic NOT_EQUAL arithmetic
+    (33) relational -> . arithmetic GREATER arithmetic
+    (34) relational -> . arithmetic LESS arithmetic
+    (35) relational -> . arithmetic GREATER_EQUAL arithmetic
+    (36) relational -> . arithmetic LESS_EQUAL arithmetic
+    (37) relational -> . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    NOT             shift and go to state 79
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    condition                      shift and go to state 149
+    relational                     shift and go to state 80
+    arithmetic                     shift and go to state 81
+    var                            shift and go to state 59
+
+state 118
+
+    (29) condition -> NOT condition .
+    (27) condition -> condition . AND condition
+    (28) condition -> condition . OR condition
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAR           reduce using rule 29 (condition -> NOT condition .)
+    AND             shift and go to state 116
+    OR              shift and go to state 117
+
+  ! AND             [ reduce using rule 29 (condition -> NOT condition .) ]
+  ! OR              [ reduce using rule 29 (condition -> NOT condition .) ]
+
+
+state 119
+
+    (31) relational -> arithmetic EQUAL . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 150
+    var                            shift and go to state 59
+
+state 120
+
+    (32) relational -> arithmetic NOT_EQUAL . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 151
+    var                            shift and go to state 59
+
+state 121
+
+    (33) relational -> arithmetic GREATER . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 152
+    var                            shift and go to state 59
+
+state 122
+
+    (34) relational -> arithmetic LESS . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 153
+    var                            shift and go to state 59
+
+state 123
+
+    (35) relational -> arithmetic GREATER_EQUAL . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 154
+    var                            shift and go to state 59
+
+state 124
+
+    (36) relational -> arithmetic LESS_EQUAL . arithmetic
+    (38) arithmetic -> . arithmetic PLUS arithmetic
+    (39) arithmetic -> . arithmetic MINUS arithmetic
+    (40) arithmetic -> . arithmetic MULTIPLY arithmetic
+    (41) arithmetic -> . arithmetic DIVIDE arithmetic
+    (42) arithmetic -> . arithmetic REMAINDER arithmetic
+    (43) arithmetic -> . INTEGER
+    (44) arithmetic -> . DECIMAL
+    (45) arithmetic -> . STRING
+    (46) arithmetic -> . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    INTEGER         shift and go to state 56
+    DECIMAL         shift and go to state 57
+    STRING          shift and go to state 58
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    arithmetic                     shift and go to state 155
+    var                            shift and go to state 59
+
+state 125
+
+    (12) unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 12 (unset -> UNSET L_PAR TVAR R_PAR SEMICOLON .)
+
+
+state 126
+
+    (13) unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 13 (unset -> UNSET L_PAR AVAR R_PAR SEMICOLON .)
+
+
+state 127
+
+    (14) unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 14 (unset -> UNSET L_PAR VVAR R_PAR SEMICOLON .)
+
+
+state 128
+
+    (15) unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 15 (unset -> UNSET L_PAR SVAR R_PAR SEMICOLON .)
+
+
+state 129
+
+    (16) unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 16 (unset -> UNSET L_PAR SPVAR R_PAR SEMICOLON .)
+
+
+state 130
+
+    (17) unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 17 (unset -> UNSET L_PAR RAVAR R_PAR SEMICOLON .)
+
+
+state 131
+
+    (38) arithmetic -> arithmetic PLUS arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    PLUS            reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    MINUS           reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    REMAINDER       reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    EQUAL           reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    NOT_EQUAL       reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    GREATER         reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    LESS            reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    GREATER_EQUAL   reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    LESS_EQUAL      reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    R_PAR           reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    AND             reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    OR              reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .)
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+
+  ! MULTIPLY        [ reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .) ]
+  ! DIVIDE          [ reduce using rule 38 (arithmetic -> arithmetic PLUS arithmetic .) ]
+  ! PLUS            [ shift and go to state 89 ]
+  ! MINUS           [ shift and go to state 90 ]
+  ! REMAINDER       [ shift and go to state 93 ]
+
+
+state 132
+
+    (39) arithmetic -> arithmetic MINUS arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    PLUS            reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    MINUS           reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    REMAINDER       reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    EQUAL           reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    NOT_EQUAL       reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    GREATER         reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    LESS            reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    GREATER_EQUAL   reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    LESS_EQUAL      reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    R_PAR           reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    AND             reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    OR              reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .)
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+
+  ! MULTIPLY        [ reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .) ]
+  ! DIVIDE          [ reduce using rule 39 (arithmetic -> arithmetic MINUS arithmetic .) ]
+  ! PLUS            [ shift and go to state 89 ]
+  ! MINUS           [ shift and go to state 90 ]
+  ! REMAINDER       [ shift and go to state 93 ]
+
+
+state 133
+
+    (40) arithmetic -> arithmetic MULTIPLY arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    PLUS            reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    MINUS           reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    MULTIPLY        reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    DIVIDE          reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    REMAINDER       reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    EQUAL           reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    NOT_EQUAL       reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    GREATER         reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    LESS            reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    GREATER_EQUAL   reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    LESS_EQUAL      reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    R_PAR           reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    AND             reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+    OR              reduce using rule 40 (arithmetic -> arithmetic MULTIPLY arithmetic .)
+
+  ! PLUS            [ shift and go to state 89 ]
+  ! MINUS           [ shift and go to state 90 ]
+  ! MULTIPLY        [ shift and go to state 91 ]
+  ! DIVIDE          [ shift and go to state 92 ]
+  ! REMAINDER       [ shift and go to state 93 ]
+
+
+state 134
+
+    (41) arithmetic -> arithmetic DIVIDE arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    SEMICOLON       reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    PLUS            reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    MINUS           reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    MULTIPLY        reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    DIVIDE          reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    REMAINDER       reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    EQUAL           reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    NOT_EQUAL       reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    GREATER         reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    LESS            reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    GREATER_EQUAL   reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    LESS_EQUAL      reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    R_PAR           reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    AND             reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+    OR              reduce using rule 41 (arithmetic -> arithmetic DIVIDE arithmetic .)
+
+  ! PLUS            [ shift and go to state 89 ]
+  ! MINUS           [ shift and go to state 90 ]
+  ! MULTIPLY        [ shift and go to state 91 ]
+  ! DIVIDE          [ shift and go to state 92 ]
+  ! REMAINDER       [ shift and go to state 93 ]
+
+
+state 135
+
+    (42) arithmetic -> arithmetic REMAINDER arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MULTIPLY resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for REMAINDER resolved as shift
+    SEMICOLON       reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    EQUAL           reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    NOT_EQUAL       reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    GREATER         reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    LESS            reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    GREATER_EQUAL   reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    LESS_EQUAL      reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    R_PAR           reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    AND             reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    OR              reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+  ! PLUS            [ reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .) ]
+  ! MINUS           [ reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .) ]
+  ! MULTIPLY        [ reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .) ]
+  ! DIVIDE          [ reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .) ]
+  ! REMAINDER       [ reduce using rule 42 (arithmetic -> arithmetic REMAINDER arithmetic .) ]
+
+
+state 136
+
+    (70) declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 156
+
+
+state 137
+
+    (56) conversion -> L_PAR type R_PAR . var
+    (60) var -> . TVAR
+    (61) var -> . AVAR
+    (62) var -> . VVAR
+    (63) var -> . SVAR
+
+    TVAR            shift and go to state 51
+    AVAR            shift and go to state 60
+    VVAR            shift and go to state 61
+    SVAR            shift and go to state 62
+
+    var                            shift and go to state 157
+
+state 138
+
+    (71) declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 158
+
+
+state 139
+
+    (72) declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 159
+
+
+state 140
+
+    (73) declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 160
+
+
+state 141
+
+    (18) print -> PRINT L_PAR TVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 18 (print -> PRINT L_PAR TVAR R_PAR SEMICOLON .)
+
+
+state 142
+
+    (19) print -> PRINT L_PAR AVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 19 (print -> PRINT L_PAR AVAR R_PAR SEMICOLON .)
+
+
+state 143
+
+    (20) print -> PRINT L_PAR VVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 20 (print -> PRINT L_PAR VVAR R_PAR SEMICOLON .)
+
+
+state 144
+
+    (21) print -> PRINT L_PAR SVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 21 (print -> PRINT L_PAR SVAR R_PAR SEMICOLON .)
+
+
+state 145
+
+    (22) print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 22 (print -> PRINT L_PAR SPVAR R_PAR SEMICOLON .)
+
+
+state 146
+
+    (23) print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    IF              reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+    $end            reduce using rule 23 (print -> PRINT L_PAR RAVAR R_PAR SEMICOLON .)
+
+
+state 147
+
+    (26) if -> IF L_PAR condition R_PAR GOTO . NAME SEMICOLON
+
+    NAME            shift and go to state 161
+
+
+state 148
+
+    (27) condition -> condition AND condition .
+    (27) condition -> condition . AND condition
+    (28) condition -> condition . OR condition
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAR           reduce using rule 27 (condition -> condition AND condition .)
+    AND             shift and go to state 116
+    OR              shift and go to state 117
+
+  ! AND             [ reduce using rule 27 (condition -> condition AND condition .) ]
+  ! OR              [ reduce using rule 27 (condition -> condition AND condition .) ]
+
+
+state 149
+
+    (28) condition -> condition OR condition .
+    (27) condition -> condition . AND condition
+    (28) condition -> condition . OR condition
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAR           reduce using rule 28 (condition -> condition OR condition .)
+    AND             shift and go to state 116
+    OR              shift and go to state 117
+
+  ! AND             [ reduce using rule 28 (condition -> condition OR condition .) ]
+  ! OR              [ reduce using rule 28 (condition -> condition OR condition .) ]
+
+
+state 150
+
+    (31) relational -> arithmetic EQUAL arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    R_PAR           reduce using rule 31 (relational -> arithmetic EQUAL arithmetic .)
+    AND             reduce using rule 31 (relational -> arithmetic EQUAL arithmetic .)
+    OR              reduce using rule 31 (relational -> arithmetic EQUAL arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 151
+
+    (32) relational -> arithmetic NOT_EQUAL arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    R_PAR           reduce using rule 32 (relational -> arithmetic NOT_EQUAL arithmetic .)
+    AND             reduce using rule 32 (relational -> arithmetic NOT_EQUAL arithmetic .)
+    OR              reduce using rule 32 (relational -> arithmetic NOT_EQUAL arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 152
+
+    (33) relational -> arithmetic GREATER arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    R_PAR           reduce using rule 33 (relational -> arithmetic GREATER arithmetic .)
+    AND             reduce using rule 33 (relational -> arithmetic GREATER arithmetic .)
+    OR              reduce using rule 33 (relational -> arithmetic GREATER arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 153
+
+    (34) relational -> arithmetic LESS arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    R_PAR           reduce using rule 34 (relational -> arithmetic LESS arithmetic .)
+    AND             reduce using rule 34 (relational -> arithmetic LESS arithmetic .)
+    OR              reduce using rule 34 (relational -> arithmetic LESS arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 154
+
+    (35) relational -> arithmetic GREATER_EQUAL arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    R_PAR           reduce using rule 35 (relational -> arithmetic GREATER_EQUAL arithmetic .)
+    AND             reduce using rule 35 (relational -> arithmetic GREATER_EQUAL arithmetic .)
+    OR              reduce using rule 35 (relational -> arithmetic GREATER_EQUAL arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 155
+
+    (36) relational -> arithmetic LESS_EQUAL arithmetic .
+    (38) arithmetic -> arithmetic . PLUS arithmetic
+    (39) arithmetic -> arithmetic . MINUS arithmetic
+    (40) arithmetic -> arithmetic . MULTIPLY arithmetic
+    (41) arithmetic -> arithmetic . DIVIDE arithmetic
+    (42) arithmetic -> arithmetic . REMAINDER arithmetic
+
+    R_PAR           reduce using rule 36 (relational -> arithmetic LESS_EQUAL arithmetic .)
+    AND             reduce using rule 36 (relational -> arithmetic LESS_EQUAL arithmetic .)
+    OR              reduce using rule 36 (relational -> arithmetic LESS_EQUAL arithmetic .)
+    PLUS            shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLY        shift and go to state 91
+    DIVIDE          shift and go to state 92
+    REMAINDER       shift and go to state 93
+
+
+state 156
+
+    (70) declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    IF              reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    $end            reduce using rule 70 (declaration -> TVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+
+
+state 157
+
+    (56) conversion -> L_PAR type R_PAR var .
+
+    SEMICOLON       reduce using rule 56 (conversion -> L_PAR type R_PAR var .)
+
+
+state 158
+
+    (71) declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    IF              reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    $end            reduce using rule 71 (declaration -> AVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+
+
+state 159
+
+    (72) declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    IF              reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    $end            reduce using rule 72 (declaration -> VVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+
+
+state 160
+
+    (73) declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .
+
+    GOTO            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    UNSET           reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    PRINT           reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    EXIT            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    NAME            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    IF              reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    TVAR            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    AVAR            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    VVAR            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SVAR            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    RAVAR           reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    SPVAR           reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+    $end            reduce using rule 73 (declaration -> SVAR ASSIGN ARRAY L_PAR R_PAR SEMICOLON .)
+
+
+state 161
+
+    (26) if -> IF L_PAR condition R_PAR GOTO NAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 162
+
+
+state 162
+
+    (26) if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .
+
+    GOTO            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    UNSET           reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    PRINT           reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    EXIT            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    NAME            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    IF              reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    TVAR            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    AVAR            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    VVAR            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    SVAR            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    RAVAR           reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    SPVAR           reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+    $end            reduce using rule 26 (if -> IF L_PAR condition R_PAR GOTO NAME SEMICOLON .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for AND in state 118 resolved as shift
+WARNING: shift/reduce conflict for OR in state 118 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 135 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 135 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLY in state 135 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 135 resolved as shift
+WARNING: shift/reduce conflict for REMAINDER in state 135 resolved as shift
+WARNING: shift/reduce conflict for AND in state 148 resolved as shift
+WARNING: shift/reduce conflict for OR in state 148 resolved as shift
+WARNING: shift/reduce conflict for AND in state 149 resolved as shift
+WARNING: shift/reduce conflict for OR in state 149 resolved as shift
