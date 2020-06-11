@@ -5,6 +5,8 @@ import sys
 from graphviz import Digraph
 import pydotplus
 from node import Node
+from SymbolTable import Table, Symbol
+from Error import Error, ErrorList
 
 
 dot = Digraph(comment='The Round Table')
@@ -20,6 +22,7 @@ graph.write_png('tree.png')
 
 a = Node('1', 'Nodo1', [])
 
+ts = Table({})
 
 
 
@@ -37,7 +40,13 @@ def run(tree):
                     return run(tree[1])
             return run(node)
 
+sym = Symbol('$VAR', 'int', 0, 1)
+ts.add(sym)
+ts.print()
 
+lexicalErrors = ErrorList([])
+syntacticErrors = ErrorList([])
+semanticErrors = ErrorList([])
 
 def run2(tree):
     #print('ARBOL = ', tree)
@@ -47,20 +56,69 @@ def run2(tree):
                 run2(node)
             else:
                 if node == '=':
-                    print('ASSIGN ', tree[1], ' -> ', run2(tree[2]))
-                    #guardar en tabla de símbolos
+                    if run2(tree[2]) != None:
+                        print('ASSIGNING ', tree[1], ' -> ', run2(tree[2]))
+                    else:
+                        error = Error('Cannot assign none value', 0,0)
+                        semanticErrors.add(error)
+                    #store in symbol table
                 elif node == '+':
-                    return run2(tree[1]) + run2(tree[2])
+                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
+                        error = Error('Cannot add string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                        error = Error('Cannot add string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run2(tree[1]) + run2(tree[2])
                 elif node == '-':
-                    return run2(tree[1]) - run2(tree[2])
+                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
+                        error = Error('Cannot substract string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                        error = Error('Cannot substract string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run2(tree[1]) - run2(tree[2])
                 elif node == '*':
-                    return run2(tree[1]) * run2(tree[2])
+                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
+                        error = Error('Cannot multiply string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                        error = Error('Cannot multiply string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run2(tree[1]) * run2(tree[2])
                 elif node == '/':
-                    return run2(tree[1]) / run2(tree[2])
+                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
+                        error = Error('Cannot divide string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                        error = Error('Cannot divide string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run2(tree[1]) - run2(tree[2])
                 elif node == '%':
-                    return run2(tree[1]) % run2(tree[2])
+                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
+                        error = Error('Cannot get remainder from string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                        error = Error('Cannot get remainder from string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run2(tree[1]) - run2(tree[2])
                 elif node == 'if':
-                    print('IF',  run2(tree[1]), ' ', tree[2])
+                    print('IF',  run2(tree[1]), tree[2])
                     #call 'search' function to locate tag and execute from there
                 elif node == '<':
                     return run2(tree[1]) < run2(tree[2])
@@ -80,6 +138,21 @@ def run2(tree):
                     return run2(tree[1]) or run2(tree[2])
                 elif node == '!':
                     return not run2(tree[1])
+                elif node == 'xor':
+                    print(tree[1], '&', tree[2])
+                    return run2(tree[1]) != run2(tree[2])
+                elif node == '&':
+                    return run2(tree[1]) and run2(tree[2])
+                elif node == '|':
+                    return run2(tree[1]) or run2(tree[2])
+                elif node == '~':
+                    return not run2(tree[1])
+                elif node == '^':
+                    return run2(tree[1]) != run2(tree[2])
+                elif node == '<<':
+                    return run2(tree[1]) << run2(tree[2])
+                elif node == '>>':
+                    return run2(tree[1]) >> run2(tree[2])
                 elif node == 'print':
                     return print('PRINTING', run2(tree[1]))
                 elif node == 'unset':
@@ -91,7 +164,9 @@ def run2(tree):
                 elif node == 'tag':
                     return print('ADDING TAG', tree[1])
                 elif node == 'array':
-                    return print('ARRAY', tree[1])                                        
+                    return print('CREATING ARRAY', tree[1])                                        
+                elif node == 'read':
+                    return print('READING TO', tree[1])                                        
                 else:
                     return tree
     else:
@@ -100,16 +175,9 @@ def run2(tree):
 
 ss = '''
     main:
-        $t0 = 'Hola';
-        unset($t15);
-        etiqueta1:
-            $a0 = 7%5;
-            $a5 = 5*25-20+100;
-            if(!1) goto etiqueta1;
-            print($t0);
-            goto etiqueta1;
-            $t1 = array();
-    exit;
+    $a55 = 0+9+9*5;
+    if(56*0 < 7) goto labelA;
+    
     '''
 
 #Reserved words
@@ -227,7 +295,7 @@ t_NEWLINE = r'\n'
 
 # Ply's special t_ignore variable allows us to define characters the lexer will ignore.
 # We're ignoring spaces.
-t_ignore = r' \t\r\n\f\v'
+t_ignore = r' \t'
 
 # More complicated tokens, such as tokens that are more than 1 character in length
 # are defined using functions.
@@ -247,8 +315,6 @@ def t_VVAR(t):
 def t_SVAR(t):
     r'\$(S|s)((0)|[1-9]*)'
     return t
-
-
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
@@ -292,7 +358,10 @@ lexer.input(ss)
 # Ensure our parser understands the correct order of operations.
 # The precedence variable is a special Ply variable.
 precedence = (
-
+    ('left', 'OR_B'),
+    ('left', 'AND_B'),
+    ('left', 'OR'),
+    ('left', 'AND'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MULTIPLY', 'DIVIDE')
 
@@ -310,6 +379,7 @@ def p_start(p):
     print('####################')
     run2(root)
     print('####################')
+    semanticErrors.print()
 
 
 def p_body(p):
@@ -432,6 +502,16 @@ def p_arithmetic_2(p):
     '''
     p[0] = p[1]
 
+def p_var(p):
+    '''
+    var : TVAR
+        | AVAR
+        | VVAR
+        | SVAR
+        | RAVAR
+        | SPVAR
+    '''
+    p[0] = p[1]
 
 def p_assign_1(p):
     '''
@@ -454,9 +534,41 @@ def p_assign_2(p):
 
 def p_assign_3(p):
     '''
-    read : var ASSIGN READ L_PAR R_PAR
+    assign : TVAR ASSIGN READ L_PAR R_PAR SEMICOLON
+        | AVAR ASSIGN READ L_PAR R_PAR SEMICOLON
+        | VVAR ASSIGN READ L_PAR R_PAR SEMICOLON
+        | SVAR ASSIGN READ L_PAR R_PAR SEMICOLON
     '''
-    p[0] = p['read', p[1]]
+    p[0] = ('read', p[1])
+
+
+def p_assign_4(p):
+    '''
+    assign : TVAR ASSIGN bitwise SEMICOLON
+        | AVAR ASSIGN bitwise SEMICOLON
+        | VVAR ASSIGN bitwise SEMICOLON
+        | SVAR ASSIGN bitwise SEMICOLON
+    '''
+    p[0] = ('=', p[1], p[3])
+
+def p_bitwise_1(p):
+    '''
+    bitwise : var AND_B var
+        | var OR_B var
+        | var XOR_B var
+        | var SHIFT_L var
+        | var SHIFT_R var
+    '''
+    p[0] = (p[2], p[1], p[3])
+
+def p_bitwise_2(p):
+    '''
+    bitwise : NOT_B TVAR
+        | NOT_B AVAR
+        | NOT_B VVAR
+        | NOT_B SVAR
+    '''
+    p[0] = (p[1], p[2])
 
 def p_conversion(p):
     '''
@@ -472,25 +584,11 @@ def p_type(p):
     '''
     p[0] = p[1]
 
-def p_var(p):
-    '''
-    var : TVAR
-        | AVAR
-        | VVAR
-        | SVAR
-    '''
-    p[0] = p[1]
-
 def p_declaration_1(p):
     '''
-    declaration : TVAR
-        | AVAR
-        | VVAR
-        | SVAR
-        | RAVAR
-        | SPVAR
+    declaration : var
     '''
-    p[0] = p[1]
+    p[0] = ('declaration', p[1])
 
 
 def p_declaration_2(p):
@@ -509,8 +607,18 @@ def p_empty(p):
     '''
     p[0] = None
 
+# def p_error(p):
+#     print("Syntax error found in ", p.type,': \'', p.value, '\'')
+
 def p_error(p):
-    print("Syntax error found in ", p.type)    
+
+    # get formatted representation of stack
+    stack_state_str = ' '.join([symbol.type for symbol in parser.symstack][1:])
+
+    print('Syntax error in input! Parser State:{} {} . {}'
+          .format(parser.state,
+                  stack_state_str,
+                  p))
 
 
 # Build the parser
