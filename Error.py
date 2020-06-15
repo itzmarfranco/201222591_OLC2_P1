@@ -12,6 +12,9 @@ class ErrorList:
     def add(self, error):
         self.errors.append(error)
 
+    def clear(self):
+        self.errors.clear()
+
     def print(self):
         for e in  self.errors:
             print(e.value, '. Line:', e.line, '. Column:', e.column)

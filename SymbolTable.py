@@ -1,31 +1,41 @@
 class Table:
-    def __init__(self, symbols = {}):
+    def __init__(self, symbols = []):
         self.symbols = symbols
 
+    def isSymbolInTable(self, id):
+        for sym in self.symbols:
+            if id == sym.id:
+                return True
+        return False
+
     def add(self, symbol):
-        self.symbols[symbol.id] = symbol
+        for sym in self.symbols:
+            if symbol.id == sym.id:
+                sym.varType = symbol.varType
+                sym.value = symbol.value
+                sym.length = symbol.length
+                sym.tree = symbol.tree
+                return
+        self.symbols.append(symbol)
+
+            
 
     def get(self, id):
-        if not id in self.symbols:
-            print('Undefined symbol', id)
-        else:
-            return self.symbols[id]
+        for sym in self.symbols:
+            if sym.id == id:
+                return sym
 
-    def update(self, symbol):
-        if not symbol.id in self.symbols:
-            print('Undefined variable', symbol.id)
-        else:
-            self.symbols[symbol.id] = symbol
 
     def print(self):
         print('ID\t', 'TYPE\t', 'VALUE\t', 'LENGTH')
-        for s in self.symbols:
-            print(s)
+        for sym in self.symbols:
+            print(sym.id, '\t', sym.varType, '\t', sym.value, '\t', sym.length)
 
 
 class Symbol:
-    def __init__(self, id, varType, value, length):
+    def __init__(self, id, varType, value, length, tree):
         self.id = id
         self.varType = varType
         self.value = value
         self.length = length
+        self.tree = tree

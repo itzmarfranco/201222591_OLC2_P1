@@ -5,4 +5,3 @@ class Node:
         self.value = value
         self.sons = []
     
- 

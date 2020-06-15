@@ -4,159 +4,194 @@ import sys
 
 from graphviz import Digraph
 import pydotplus
+
 from node import Node
 from SymbolTable import Table, Symbol
 from Error import Error, ErrorList
 
-
-dot = Digraph(comment='The Round Table')
-
-dot.node('A', 'King Arthur' + 'TEST', shape='box')
-dot.node('B', 'Sir Bedevere the Wise')
-dot.node('L', 'Sir Lancelot the Brave')
-dot.edges(['AB'])
-dot.edge('B', 'L', constraint='false')
-graph = pydotplus.graph_from_dot_data(dot.source)
-#Image(graph.create_png())
-graph.write_png('tree.png')
-
-a = Node('1', 'Nodo1', [])
-
 ts = Table({})
 
+lexicalErrors = ErrorList([])
+syntacticErrors = ErrorList([])
+semanticErrors = ErrorList([])
+#  lineal AST
+tree = None
 
 
 def run(tree):
     if type(tree) == tuple:
         for node in tree:
-            if(type(node) == tuple):
-                if node[0] == '=':
-                    print('Asignando ', node[1], ' -> ', node[2])
-                    return None
-                elif node[0] == '+':
-                    return run(tree[1]) + run(tree[2])
-            else:
-                if node == 'main':
-                    return run(tree[1])
-            return run(node)
-
-sym = Symbol('$VAR', 'int', 0, 1)
-ts.add(sym)
-ts.print()
-
-lexicalErrors = ErrorList([])
-syntacticErrors = ErrorList([])
-semanticErrors = ErrorList([])
-
-def run2(tree):
-    #print('ARBOL = ', tree)
-    if type(tree) == tuple:
-        for node in tree:
             if type(node) == tuple:
-                run2(node)
+                run(node)
             else:
                 if node == '=':
-                    if run2(tree[2]) != None:
-                        print('ASSIGNING ', tree[1], ' -> ', run2(tree[2]))
+                    if run(tree[2]) != None:
+                        print('ASSIGNING ', tree[1], ' -> ', run(tree[2]))
                     else:
                         error = Error('Cannot assign none value', 0,0)
                         semanticErrors.add(error)
                     #store in symbol table
                 elif node == '+':
-                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
+                    if isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
                         error = Error('Cannot add string and number', 0,0)
                         semanticErrors.add(error)
                         return
-                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                    elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
                         error = Error('Cannot add string and number', 0,0)
                         semanticErrors.add(error)
                         return
                     else:
-                        return run2(tree[1]) + run2(tree[2])
+                        return run(tree[1]) + run(tree[2])
                 elif node == '-':
-                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
-                        error = Error('Cannot substract string and number', 0,0)
-                        semanticErrors.add(error)
-                        return
-                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                    if isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
                         error = Error('Cannot substract string and number', 0,0)
                         semanticErrors.add(error)
                         return
                     else:
-                        return run2(tree[1]) - run2(tree[2])
+                        return run(tree[1]) - run(tree[2])
                 elif node == '*':
-                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
-                        error = Error('Cannot multiply string and number', 0,0)
-                        semanticErrors.add(error)
-                        return
-                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
+                    if isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
                         error = Error('Cannot multiply string and number', 0,0)
                         semanticErrors.add(error)
                         return
                     else:
-                        return run2(tree[1]) * run2(tree[2])
+                        return run(tree[1]) * run(tree[2])
                 elif node == '/':
-                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
+                    if isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
                         error = Error('Cannot divide string and number', 0,0)
                         semanticErrors.add(error)
                         return
-                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
-                        error = Error('Cannot divide string and number', 0,0)
+                    elif run(tree[2]) == 0:
+                        error = Error('Cannot divide by 0', 0,0)
                         semanticErrors.add(error)
                         return
                     else:
-                        return run2(tree[1]) - run2(tree[2])
+                        return run(tree[1]) / run(tree[2])
                 elif node == '%':
-                    if type(tree[1]) == str and (type(tree[2] == int) or type(tree[2] == float)):
-                        error = Error('Cannot get remainder from string and number', 0,0)
+                    if isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
+                        error = Error('Cannot divide string and number', 0,0)
                         semanticErrors.add(error)
                         return
-                    elif type(tree[2]) == str and (type(tree[1] == int) or type(tree[1] == float)):
-                        error = Error('Cannot get remainder from string and number', 0,0)
+                    elif run(tree[2]) == 0:
+                        error = Error('Cannot get remainder from zero division', 0,0)
                         semanticErrors.add(error)
                         return
                     else:
-                        return run2(tree[1]) - run2(tree[2])
+                        return run(tree[1]) % run(tree[2])
                 elif node == 'if':
-                    print('IF',  run2(tree[1]), tree[2])
+                    print('IF',  run(tree[1]), tree[2])
                     #call 'search' function to locate tag and execute from there
                 elif node == '<':
-                    return run2(tree[1]) < run2(tree[2])
+                    if isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
+                        error = Error('Cannot compare \'<\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
+                        error = Error('Cannot compare \'<\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) < run(tree[2])
                 elif node == '>':
-                    return run2(tree[1]) > run2(tree[2])
+                    if isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
+                        error = Error('Cannot compare \'>\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
+                        error = Error('Cannot compare \'>\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) > run(tree[2])
                 elif node == '<=':
-                    return run2(tree[1]) <= run2(tree[2])
+                    if isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
+                        error = Error('Cannot compare \'<=\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
+                        error = Error('Cannot compare \'<=\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) <= run(tree[2])
                 elif node == '>=':
-                    return run2(tree[1]) >= run2(tree[2])
+                    if isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
+                        error = Error('Cannot compare \'>=\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
+                        error = Error('Cannot compare \'>=\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) >= run(tree[2])
                 elif node == '==':
-                    return run2(tree[1]) == run2(tree[2])
+                    if isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
+                        error = Error('Cannot compare \'==\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
+                        error = Error('Cannot compare \'==\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) == run(tree[2])
                 elif node == '!=':
-                    return run2(tree[1]) != run2(tree[2])
+                    if isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
+                        error = Error('Cannot compare \'!=\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
+                        error = Error('Cannot compare \'!=\' string and number', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) != run(tree[2])
                 elif node == '&&':
-                    return run2(tree[1]) and run2(tree[2])
+                    if run(tree[1]) not in (0,1) or run(tree[2]) not in (0,1):
+                        error = Error('Cannot compare \'&&\' non-boolean values', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) and run(tree[2])
                 elif node == '||':
-                    return run2(tree[1]) or run2(tree[2])
+                    if run(tree[1]) not in (0,1) or run(tree[2]) not in (0,1):
+                        error = Error('Cannot compare \'||\' non-boolean values', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) or run(tree[2])
                 elif node == '!':
-                    return not run2(tree[1])
+                    if run(tree[1]) not in (0,1):
+                        error = Error('Cannot compare \'!\' non-boolean values', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return not run(tree[1])
                 elif node == 'xor':
-                    print(tree[1], '&', tree[2])
-                    return run2(tree[1]) != run2(tree[2])
+                    if run(tree[1]) not in (0,1) or run(tree[2]) not in (0,1):
+                        error = Error('Cannot compare \'xor\' non-boolean values', 0,0)
+                        semanticErrors.add(error)
+                        return
+                    else:
+                        return run(tree[1]) != run(tree[2])
                 elif node == '&':
-                    return run2(tree[1]) and run2(tree[2])
+                    #TOCA AGREGAR LAS OPERACIONES BIT A BIT
+                    return run(tree[1]) & run(tree[2])
                 elif node == '|':
-                    return run2(tree[1]) or run2(tree[2])
+                    return run(tree[1]) | run(tree[2])
                 elif node == '~':
-                    return not run2(tree[1])
+                    return not run(tree[1])
                 elif node == '^':
-                    return run2(tree[1]) != run2(tree[2])
+                    return run(tree[1]) != run(tree[2])
                 elif node == '<<':
-                    return run2(tree[1]) << run2(tree[2])
+                    return run(tree[1]) << run(tree[2])
                 elif node == '>>':
-                    return run2(tree[1]) >> run2(tree[2])
+                    return run(tree[1]) >> run(tree[2])
                 elif node == 'print':
-                    return print('PRINTING', run2(tree[1]))
+                    return print('PRINTING', run(tree[1]))
                 elif node == 'unset':
-                    return print('DELETING', run2(tree[1]))
+                    return print('DELETING', run(tree[1]))
                 elif node == 'exit':
                     return print('EXITING')
                 elif node == 'goto':
@@ -173,12 +208,7 @@ def run2(tree):
         return tree
 
 
-ss = '''
-    main:
-    $a55 = 0+9+9*5;
-    if(56*0 < 7) goto labelA;
-    
-    '''
+
 
 #Reserved words
 
@@ -247,9 +277,8 @@ tokens = [
 
     'INTEGER', # 1 2 3...
     'DECIMAL', # 1.54...
-    'STRING', # hello
+    'STRING' # hello
 
-    'NEWLINE' # \n
 ] + list(reserved.values())
 
 # Use regular expressions to define what each token is
@@ -290,8 +319,6 @@ t_L_BRACKET = r'\['
 t_R_BRACKET = r'\]'
 t_QUOTE_1 = r'\''
 t_QUOTE_2 = r'\"'
-
-t_NEWLINE = r'\n'
 
 # Ply's special t_ignore variable allows us to define characters the lexer will ignore.
 # We're ignoring spaces.
@@ -345,6 +372,10 @@ def t_NAME(t):
 def t_newLine(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
+
+def find_column(input, token):
+     line_start = input.rfind('\n', 0, token.lexpos) + 1
+     return (token.lexpos - line_start) + 1
     
 # Skip the current token and output 'Illegal characters' using the special Ply t_error function.
 def t_error(t):
@@ -353,7 +384,7 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
-lexer.input(ss)
+lexer.input('main:')
 
 # Ensure our parser understands the correct order of operations.
 # The precedence variable is a special Ply variable.
@@ -374,13 +405,8 @@ def p_start(p):
     start : MAIN COLON body
     '''
     p[0] = (p[3])
-    print(p[0])
-    root = p[0]
-    print('####################')
-    run2(root)
-    print('####################')
-    semanticErrors.print()
 
+    tree = p[0]
 
 def p_body(p):
     '''
@@ -515,10 +541,10 @@ def p_var(p):
 
 def p_assign_1(p):
     '''
-    assign : TVAR ASSIGN arithmetic SEMICOLON
-        | AVAR ASSIGN arithmetic SEMICOLON
-        | VVAR ASSIGN arithmetic SEMICOLON
-        | SVAR ASSIGN arithmetic SEMICOLON
+    assign : TVAR ASSIGN condition SEMICOLON
+        | AVAR ASSIGN condition SEMICOLON
+        | VVAR ASSIGN condition SEMICOLON
+        | SVAR ASSIGN condition SEMICOLON
     '''
     p[0] = ('=', p[1], p[3])
     #print(p[0])
@@ -638,4 +664,4 @@ parser = yacc.yacc()
 #     except EOFError:
 #         break
 #     parser.parse(s)
-parser.parse(ss)
+parser.parse('main:')
