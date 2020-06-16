@@ -27,16 +27,13 @@ class InterpreterFunctions:
 
     def interpretar(self, event=None):
         #showinfo("Notepad","Interpretando...")
-        from .gramatica_asc import analizador
+        from .grammar import analize
         #from .gramatica_ast import analizador_ast
 
-        entrada = self.text.get("1.0",'end')
+        text = self.text.get("1.0",'end')
         
-        salida_gramatical = analizador(entrada)
+        ast = analize(text)
         #salida_ast = analizador_ast(entrada)
-
-        #self.text.insert("1.0",'\n')
-        #self.text.insert("1.0", salida)
 
         return
 

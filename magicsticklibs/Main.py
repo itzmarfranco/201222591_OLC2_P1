@@ -22,8 +22,9 @@ class TextPad_Window(tk.Tk):
 		#self._text_pad_consola()
 
 	def _text_pad_(self):
-		#TextPadConsola(self).pack()
 		TextPad(self).pack()
+		TextPadConsola(self).pack()
+		
 		return
 
 	#

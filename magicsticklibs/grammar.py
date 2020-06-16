@@ -11,12 +11,10 @@ from node import Node
 from SymbolTable import Table, Symbol
 from Error import Error, ErrorList
 
+from .TextPadConsola import TextPadConsola
 
-# graph = pydotplus.graph_from_dot_data('DIGRAPH{tbl[shape=plaintext\nlabel=<<TABLE><TR><TD colspan=\'4\'>REPORTE GRAMATICAL ASCENDENTE</TD></TR><TR><TD>Gramatica</TD><TD>Acciones</TD><TD>Linea</TD><TD>Comentario</TD></TR><TR><TD>instruccion_asignacion : registro ASIGNACION expresion PUNTOYCOMA</TD><TD>t[0] = (t[1],t[3])</TD><TD>2</TD><TD>Se reconocio una asignacion (\'$t0\', (\'$a0\', \'+\', 8))</TD></TR><TR>\n        <TD>\n        <TABLE ALIGN="LEFT" BORDER="0">\n        <TR><TD>instruccion : instruccion_imprimir</TD></TR>\n        <TR><TD>| instruccion_unset</TD></TR>\n        <TR><TD>| instruccion_asignacion</TD></TR>\n        <TR><TD>| instruccion_control</TD></TR>\n        <TR><TD>| instruccion_goto</TD></TR>\n        <TR><TD>| instruccion_etiqueta</TD></TR>\n        <TR><TD>| instruccion_salir</TD></TR>\n        </TABLE>\n        </TD>\n        <TD>t[0] = t[1]</TD><TD>2</TD><TD>Se reconocio una instruccion del catalogo</TD></TR><TR><TD>instrucciones : instruccion</TD><TD>t[0] = [t[1]]</TD><TD>2</TD><TD>Se reconocio una instrucciones</TD></TR><TR><TD>instruccion_asignacion : registro ASIGNACION expresion PUNTOYCOMA</TD><TD>t[0] = (t[1],t[3])</TD><TD>3</TD><TD>Se reconocio una asignacion (\'$t1\', (42, \'*\', 1))</TD></TR><TR>\n        <TD>\n        <TABLE ALIGN="LEFT" BORDER="0">\n        <TR><TD>instruccion : instruccion_imprimir</TD></TR>\n        <TR><TD>| instruccion_unset</TD></TR>\n        <TR><TD>| instruccion_asignacion</TD></TR>\n        <TR><TD>| instruccion_control</TD></TR>\n        <TR><TD>| instruccion_goto</TD></TR>\n        <TR><TD>| instruccion_etiqueta</TD></TR>\n        <TR><TD>| instruccion_salir</TD></TR>\n        </TABLE>\n        </TD>\n        <TD>t[0] = t[1]</TD><TD>3</TD><TD>Se reconocio una instruccion del catalogo</TD></TR><TR><TD>instrucciones : instrucciones instruccion</TD><TD>t[1].append(t[2]), t[0] = t[1]</TD><TD>2</TD><TD>Lista de instrucciones</TD></TR><TR><TD>instruccion_asignacion : registro ASIGNACION expresion PUNTOYCOMA</TD><TD>t[0] = (t[1],t[3])</TD><TD>4</TD><TD>Se reconocio una asignacion (\'$t2\', \'$t1\')</TD></TR><TR>\n        <TD>\n        <TABLE ALIGN="LEFT" BORDER="0">\n        <TR><TD>instruccion : instruccion_imprimir</TD></TR>\n        <TR><TD>| instruccion_unset</TD></TR>\n        <TR><TD>| instruccion_asignacion</TD></TR>\n        <TR><TD>| instruccion_control</TD></TR>\n        <TR><TD>| instruccion_goto</TD></TR>\n        <TR><TD>| instruccion_etiqueta</TD></TR>\n        <TR><TD>| instruccion_salir</TD></TR>\n        </TABLE>\n        </TD>\n        <TD>t[0] = t[1]</TD><TD>4</TD><TD>Se reconocio una instruccion del catalogo</TD></TR><TR><TD>instrucciones : instrucciones instruccion</TD><TD>t[1].append(t[2]), t[0] = t[1]</TD><TD>2</TD><TD>Lista de instrucciones</TD></TR><TR><TD>instruccion_asignacion : registro ASIGNACION expresion PUNTOYCOMA</TD><TD>t[0] = (t[1],t[3])</TD><TD>5</TD><TD>Se reconocio una asignacion (\'$t3\', \'array\')</TD></TR><TR>\n        <TD>\n        <TABLE ALIGN="LEFT" BORDER="0">\n        <TR><TD>instruccion : instruccion_imprimir</TD></TR>\n        <TR><TD>| instruccion_unset</TD></TR>\n        <TR><TD>| instruccion_asignacion</TD></TR>\n        <TR><TD>| instruccion_control</TD></TR>\n        <TR><TD>| instruccion_goto</TD></TR>\n        <TR><TD>| instruccion_etiqueta</TD></TR>\n        <TR><TD>| instruccion_salir</TD></TR>\n        </TABLE>\n        </TD>\n        <TD>t[0] = t[1]</TD><TD>5</TD><TD>Se reconocio una instruccion del catalogo</TD></TR><TR><TD>instrucciones : instrucciones instruccion</TD><TD>t[1].append(t[2]), t[0] = t[1]</TD><TD>2</TD><TD>Lista de instrucciones</TD></TR><TR><TD>instruccion_imprimir : PRINT PARENTESISIZQ registro PARENTESISDER PUNTOYCOMA</TD><TD>t[0] = t[3]</TD><TD>6</TD><TD>Se reconocio una instruccion de imprimir registro $t0</TD></TR><TR>\n        <TD>\n        <TABLE ALIGN="LEFT" BORDER="0">\n        <TR><TD>instruccion : instruccion_imprimir</TD></TR>\n        <TR><TD>| instruccion_unset</TD></TR>\n        <TR><TD>| instruccion_asignacion</TD></TR>\n        <TR><TD>| instruccion_control</TD></TR>\n        <TR><TD>| instruccion_goto</TD></TR>\n        <TR><TD>| instruccion_etiqueta</TD></TR>\n        <TR><TD>| instruccion_salir</TD></TR>\n        </TABLE>\n        </TD>\n        <TD>t[0] = t[1]</TD><TD>6</TD><TD>Se reconocio una instruccion del catalogo</TD></TR><TR><TD>instrucciones : instrucciones instruccion</TD><TD>t[1].append(t[2]), t[0] = t[1]</TD><TD>2</TD><TD>Lista de instrucciones</TD></TR> <TR><TD>inicio_august : MAIN DOSPUNTOS instruccions</TD><TD>t[0] = t[3]</TD><TD>1</TD><TD>Se reconocio Main</TD></TR></TABLE>>];}')
-# #Image(graph.create_png())
-# graph.write_pdf('tree.pdf')
 
-def analizador(entrada):
+def analize(entrada):
     
     reserved = {
         'if': 'IF',
@@ -128,7 +126,7 @@ def analizador(entrada):
 
     # Ply's special t_ignore variable allows us to define characters the lexer will ignore.
     # We're ignoring spaces.
-    t_ignore = r' \t'
+    t_ignore = ' \t'
 
     # More complicated tokens, such as tokens that are more than 1 character in length
     # are defined using functions.
@@ -218,7 +216,8 @@ def analizador(entrada):
         p[0] = (p[3])
 
         tree = p[0]
-        #run(tree)
+        runTag(tree, None)
+        run(tree)
         print(tree)
         log.append('<tr><td>start : MAIN COLON body</td><td>p[0] = p[1]</td><td>'+ str(p.lineno(0)) +'</td><td>Etiqueta main</td></tr>')
 
@@ -441,6 +440,16 @@ def analizador(entrada):
         p[0] = ('=', 'array_a', p[1], p[3], p[6])
         log.append('<tr><td>assign : VAR [ OP ] ASSIGN condition ;</td><td>p[0] = (=, array_assign, p[1], p[3], p[6])</td><td>'+ str(p.lineno(0)) +'</td><td>Asignacion de valor a variable de arreglo</td></tr>')
 
+    def p_assign_6(p):
+        '''
+        assign : TVAR ASSIGN ABS L_PAR var R_PAR SEMICOLON
+            | AVAR ASSIGN ABS L_PAR  var R_PAR SEMICOLON
+            | VVAR ASSIGN ABS L_PAR var R_PAR SEMICOLON
+            | SVAR ASSIGN ABS L_PAR var R_PAR SEMICOLON
+        '''
+        p[0] = ('=', 'abs', p[1], p[5])
+        log.append('<tr><td>assign : ABS ( VAR )</td><td>p[0] = (=, abs, p[1], p[5])</td><td>'+ str(p.lineno(0)) +'</td><td>Operacion de valor absoluto</td></tr>')
+
     def p_bitwise_1(p):
         '''
         bitwise : var AND_B var
@@ -517,15 +526,12 @@ def analizador(entrada):
         p[0] = None
         log.append('<tr><td>empty : </td><td>p[0] = None</td><td>'+ str(p.lineno(0)) +'</td><td>Produccion vacia</td></tr>')
 
-    # def p_error(p):
-    #     print("Syntax error found in ", p.type,': \'', p.value, '\'')
 
     def p_error(t):
         #print(t)
         print("Error sintactico: " + str(t.value) + " , tipo: " + str(t.type))
         print("Linea: " + str(t.lineno) + " ,Columna: " + str(t.lexpos))
 
-        #historial.append("<TR><TD>instruccion_goto : GOTO ETIQUETA PUNTOYCOMA</TD><TD>t[0] = t[2]</TD><TD>"+str(t.lineno(2))+f"</TD><TD>Se reconocio una instruccion goto {t[0]}</TD></TR>")
     
     ts = Table([])
 
@@ -534,6 +540,36 @@ def analizador(entrada):
     semanticErrors = ErrorList([])
     #  lineal AST
     tree = None
+ 
+# main:
+# goto label2;
+# $t9 = 'Testing labels';
+# print($t9);
+# label2:
+# $t9 = 'Skipped label';
+# print($t9);
+# label3:
+# goto label2;
+# label4:
+
+
+#runTAg(tree, None)
+
+
+    def runTag(tree1, tree2):
+        if type(tree1) == tuple:
+            size = len(tree1)
+            for i in range(0, size):
+                if type(tree1[i]) == tuple:
+                    try:
+                        runTag(tree1[i], tree1[i+1])
+                    except:
+                        runTag(tree1[i], None)
+                else:
+                    if tree1[i] == 'tag':
+                        print('ETIQUETA ENCONTRADA', tree1[1], '->', tree2)
+                        sym = Symbol(tree1[1], 'tag', None, None, tree2)
+                        ts.add(sym)
 
     def run(tree):
         if type(tree) == tuple:
@@ -558,8 +594,6 @@ def analizador(entrada):
                                     id = str(tree[2]) + '[' + str(run(tree[3])) + ']'
                                     sym = Symbol(id, varType, run(tree[4]), 1, ())
                                     ts.add(sym)
-                                    print('TS')
-                                    ts.print()
                                     return
                                 else:
                                     error = Error('Cannot assign none value', 0,0)
@@ -568,6 +602,20 @@ def analizador(entrada):
                             else:
                                 error = Error('Array \''+str(tree[2])+'\' not declared', 0,0)
                                 semanticErrors.add(error)
+                        elif tree[1] == 'abs':
+                            if isinstance(run(tree[3]), int) or isinstance(run(tree[3]), float):
+                                # calculate abs(tree[3])
+                                absValue = abs(run(tree[3]))
+                                varType = ''
+                                if isinstance(run(tree[3]), int):
+                                    varType = 'int'
+                                else:
+                                    varType = 'flt'
+                                # store tree[2] in ts
+                                sym = Symbol(tree[2], varType , absValue, 1, ())
+                                ts.add(sym)
+                            else:
+                                pass
                         else:
                             if run(tree[2]) != None:
                                 print('ASSIGNING ', tree[1], ' -> ', run(tree[2]))
@@ -882,7 +930,8 @@ def analizador(entrada):
                         return print('JUMPING TO', tree[1])
                     elif node == 'tag':
                         # guardar la etiqueta como variable en la tabla de simbolos
-                        return print('ADDING TAG', tree[1])
+
+                        return #print('ADDING TAG', tree[1])
                     elif node == 'array':
                         # guardar variable como arreglo en la tabla de simbolos
                         sym = Symbol(tree[1], 'array', None, 2, ())
@@ -892,7 +941,7 @@ def analizador(entrada):
                     elif node == 'read':
                         # capturar entrada escrita en la terminal
                         # guardar en la tabla de simbolos
-                        return print('READING TO', tree[1])                                        
+                        return print('READING TO', tree[1])                                
                     else:
                         #print('returning tree 1:::', tree)
                         #return tree
@@ -917,23 +966,49 @@ def analizador(entrada):
                 return tree
 
 
-    
 
     from .ply import yacc as yacc
     parser = yacc.yacc()
 
-    resultado = parser.parse(entrada,tracking=True)
-
-    dotData = 'DIGRAPH{tbl[shape=plaintext\nlabel=<<TABLE><TR><TD colspan=\'4\'>Reporte gramatical</TD></TR>'
-    dotData = dotData + '<TR><TD>Produccion</TD><TD>Acciones</TD><TD>Línea</TD><TD>Descripción</TD></TR>'
-    for x in reversed(log):
-        dotData = dotData + x
-    dotData = dotData + '</TABLE>>];}'
-
     
-    #dot.node(name ='Tabla_Reporte', label= historial_string)
-    #dot.view()
-    graph = pydotplus.graph_from_dot_data(dotData)
-    #Image(graph.create_png())
-    graph.write_png('reporte_gramatical.png')
-    return resultado
+    ast = parser.parse(entrada,tracking=True)
+
+
+    dotDataReport = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'4\'>Reporte gramatical</td></tr>'
+    dotDataReport = dotDataReport + '<tr><td>Produccion</td><td>Acciones</td><td>Línea</td><td>Descripción</td></tr>'
+    for x in reversed(log):
+        dotDataReport = dotDataReport + x
+    dotDataReport = dotDataReport + '</table>>];}'
+
+    reportGraph = pydotplus.graph_from_dot_data(dotDataReport)
+    reportGraph.write_png('Reporte_gramatical.png')
+
+    dotDataTS = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'5\'>Tabla de símbolos</td></tr>'
+    dotDataTS = dotDataTS + '<tr><td>ID</td><td>Tipo</td><td>Valor</td><td>Longitud</td><td>Arbol asociado</td></tr>'
+    for sym in ts.symbols:
+        treeToString = str(sym.tree).replace('\'', '\\\\\'')
+        dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td><td>'+str(sym.tree)+'</td></tr>'
+    dotDataTS = dotDataTS + '</table>>];}'
+
+    tsGraph = pydotplus.graph_from_dot_data(dotDataTS)
+    tsGraph.write_png('Reporte_TablaSimbolos.png')
+
+    dotDataErrors = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'3\'>Reporte de errores</td></tr>'
+    dotDataErrors = dotDataErrors + '<tr><td>Error</td><td>Tipo</td><td>Linea</td></tr>'
+    for e in lexicalErrors.errors:
+        dotDataErrors += '<tr><td>'+str(e.value)+'</td><td>Léxico</td><td>'+str(e.line)+'</td></tr>'
+
+    for e in syntacticErrors.errors:
+        dotDataErrors += '<tr><td>'+str(e.value)+'</td><td>Sintáctico</td><td>'+str(e.line)+'</td></tr>'
+
+    for e in semanticErrors.errors:
+        dotDataErrors += '<tr><td>'+str(e.value)+'</td><td>Semántico</td><td>'+str(e.line)+'</td></tr>'
+
+    dotDataErrors = dotDataErrors + '</table>>];}'
+
+    errorGraph = pydotplus.graph_from_dot_data(dotDataErrors)
+    errorGraph.write_png('Reporte_Errores.png')
+
+
+
+    return ast
