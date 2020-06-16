@@ -596,11 +596,11 @@ def analize(entrada):
                                     ts.add(sym)
                                     return
                                 else:
-                                    error = Error('Cannot assign none value', 0,0)
+                                    error = Error('No se puede asignar valor \'None\'', 0,0)
                                     semanticErrors.add(error)
                                     return
                             else:
-                                error = Error('Array \''+str(tree[2])+'\' not declared', 0,0)
+                                error = Error('Arreglo \''+str(tree[2])+'\' no declarado', 0,0)
                                 semanticErrors.add(error)
                         elif tree[1] == 'abs':
                             if isinstance(run(tree[3]), int) or isinstance(run(tree[3]), float):
@@ -629,77 +629,75 @@ def analize(entrada):
 
                                 sym = Symbol(tree[1], varType, run(tree[2]), 1, ())
                                 ts.add(sym)
-                                print('TS')
-                                ts.print()
                                 return
                             else:
-                                error = Error('Cannot assign none value', 0,0)
+                                error = Error('No se puede asignar valor \'None\'', 0,0)
                                 semanticErrors.add(error)
                                 return
                         #store in symbol table
                     elif node == '+':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot operate \'+\' none value', 0,0)
+                            error = Error('No se puede operar con \'+\' valor  \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
-                            error = Error('Cannot add string and number', 0,0)
+                            error = Error('No se puede sumar cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
-                            error = Error('Cannot add number and string', 0,0)
+                            error = Error('No se puede sumar cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) + run(tree[2])
                     elif node == '-':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot operate \'-\' none value', 0,0)
+                            error = Error('No se puede operar con \'-\' valor  \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
-                            error = Error('Cannot substract string and number', 0,0)
+                            error = Error('No se puede restar cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) - run(tree[2])
                     elif node == '*':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot operate \'*\' none value', 0,0)
+                            error = Error('No se puede operar con \'*\' valor  \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
-                            error = Error('Cannot multiply string and number', 0,0)
+                            error = Error('No se puede multiplicar cadena', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) * run(tree[2])
                     elif node == '/':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot operate \'*\' none value', 0,0)
+                            error = Error('No se puede operar con \'*\' valoor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
-                            error = Error('Cannot divide string and number', 0,0)
+                            error = Error('No se puede dividir cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif run(tree[2]) == 0:
-                            error = Error('Cannot divide by 0', 0,0)
+                            error = Error('No se puede dividir entre 0', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) / run(tree[2])
                     elif node == '%':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot operate \'/\' none value', 0,0)
+                            error = Error('No se puede operar con \'/\' valor  \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         if isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
-                            error = Error('Cannot divide string and number', 0,0)
+                            error = Error('No se puede dividir cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif run(tree[2]) == 0:
-                            error = Error('Cannot get remainder from zero division', 0,0)
+                            error = Error('No se puede obtener residuo de división entre 0', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
@@ -709,206 +707,206 @@ def analize(entrada):
                         #call 'search' function to locate tag and execute from there
                     elif node == '<':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'<\' none value', 0,0)
+                            error = Error('No se puede comparar con \'<\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
-                            error = Error('Cannot compare \'<\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'<\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
-                            error = Error('Cannot compare \'<\' string and number', 0,0)
+                            error = Error('No se puede comparar \'<\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) < run(tree[2])
                     elif node == '>':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'>\' none value', 0,0)
+                            error = Error('No se puede comparar con \'>\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
-                            error = Error('Cannot compare \'>\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'>\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
-                            error = Error('Cannot compare \'>\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'>\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) > run(tree[2])
                     elif node == '<=':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'<=\' none value', 0,0)
+                            error = Error('No se puede comparar con \'<=\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
-                            error = Error('Cannot compare \'<=\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'<=\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
-                            error = Error('Cannot compare \'<=\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'<=\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) <= run(tree[2])
                     elif node == '>=':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'>=\' none value', 0,0)
+                            error = Error('No se puede comparar con \'>=\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
-                            error = Error('Cannot compare \'>=\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'>=\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
-                            error = Error('Cannot compare \'>=\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'>=\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) >= run(tree[2])
                     elif node == '==':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'==\' none value', 0,0)
+                            error = Error('No se puede comparar con \'==\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
-                            error = Error('Cannot compare \'==\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'==\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
-                            error = Error('Cannot compare \'==\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'==\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) == run(tree[2])
                     elif node == '!=':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'!=\' none value', 0,0)
+                            error = Error('No se puede comparar con \'!=\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) and (isinstance(run(tree[2]), int) or isinstance(run(tree[2]), float)):
-                            error = Error('Cannot compare \'!=\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'!=\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[2]), str) and (isinstance(run(tree[1]), int) or isinstance(run(tree[1]), float)):
-                            error = Error('Cannot compare \'!=\' string and number', 0,0)
+                            error = Error('No se puede comparar con \'!=\' cadena y número', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) != run(tree[2])
                     elif node == '&&':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'&&\' none value', 0,0)
+                            error = Error('No se puede comparar con \'&&\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif run(tree[1]) not in (0,1) or run(tree[2]) not in (0,1):
-                            error = Error('Cannot compare \'&&\' non-boolean values', 0,0)
+                            error = Error('No se puede comparar con \'&&\' valores no booleanos', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) and run(tree[2])
                     elif node == '||':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'||\' none value', 0,0)
+                            error = Error('No se puede comparar con \'||\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif run(tree[1]) not in (0,1) or run(tree[2]) not in (0,1):
-                            error = Error('Cannot compare \'||\' non-boolean values', 0,0)
+                            error = Error('No se puede comparar con \'||\' valores no booleanos', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) or run(tree[2])
                     elif node == '!':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'<\' none value', 0,0)
+                            error = Error('No se puede comparar con \'<\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif run(tree[1]) not in (0,1):
-                            error = Error('Cannot compare \'!\' non-boolean values', 0,0)
+                            error = Error('No se puede comparar con \'!\' valores no booleanos', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return not run(tree[1])
                     elif node == 'xor':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'xor\' none value', 0,0)
+                            error = Error('No se puede comparar con \'xor\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif run(tree[1]) not in (0,1) or run(tree[2]) not in (0,1):
-                            error = Error('Cannot compare \'xor\' non-boolean values', 0,0)
+                            error = Error('No se puede comparar con \'xor\' valores no booleanos', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) != run(tree[2])
                     elif node == '&':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'&\' none value', 0,0)
+                            error = Error('No se puede comparar con \'&\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str) or isinstance(run(tree[1]), float) or isinstance(run(tree[2]), float):
-                            error = Error('Cannot compare \'&\' string or float', 0,0)
+                            error = Error('No se puede comparar con \'&\' cadena o decimal', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) & run(tree[2])
                     elif node == '|':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'|\' none value', 0,0)
+                            error = Error('No se puede comparar con \'|\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str) or isinstance(run(tree[1]), float) or isinstance(run(tree[2]), float):
-                            error = Error('Cannot compare \'|\' string or float', 0,0)
+                            error = Error('No se puede comparar con \'|\' cadena o decimal', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) | run(tree[2])
                     elif node == '~':
                         if run(tree[1]) == None:
-                            error = Error('Cannot compare \'~\' none value', 0,0)
+                            error = Error('No se puede operar con \'~\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[1]), float):
-                            error = Error('Cannot operate \'~\' string or float', 0,0)
+                            error = Error('Cannot operate \'~\' cadena o decimal', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return ~(run(tree[1]))
                     elif node == '^':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot compare \'^\' none value', 0,0)
+                            error = Error('No se puede operar con \'^\' valor \'None\'', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str) or isinstance(run(tree[1]), float) or isinstance(run(tree[2]), float):
-                            error = Error('Cannot compare \'^\' string or float', 0,0)
+                            error = Error('No se puede operar con \'^\' cadena o decimal', 0,0)
                             semanticErrors.add(error)
                             return
                         else:
                             return run(tree[1]) ^ run(tree[2])
                     elif node == '<<':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot use none value when shifting', 0,0)
+                            error = Error('No se puede usar valor \'None\' al desplazar', 0,0)
                             semanticErrors.add(error)
                             return
                         elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str) or isinstance(run(tree[1]), float) or isinstance(run(tree[2]), float):
-                            error = Error('Cannot use \'<<\' operator with string or float', 0,0)
+                            error = Error('No se puede usar \'<<\' con cadena o decimal', 0,0)
                             semanticErrors.add(error)
                             if run(tree[2]) < 0:
-                                error = Error('Cannot shift negative steps', 0,0)
+                                error = Error('No se puede desplazar pasos negativos', 0,0)
                                 semanticErrors.add(error)
                                 return
                         else:
                             return run(tree[1]) << run(tree[2])
                     elif node == '>>':
                         if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('Cannot use none value when shifting', 0,0)
+                            error = Error('No se puede usar valor \'None\' al desplazar', 0,0)
                             semanticErrors.add(error)
                             return
                         if isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str) or isinstance(run(tree[1]), float) or isinstance(run(tree[2]), float):
-                            error = Error('Cannot use \'>>\' operator with string or float', 0,0)
+                            error = Error('No se puede usar \'>>\' con cadena o decimal', 0,0)
                             semanticErrors.add(error)
                             if run(tree[2]) < 0:
-                                error = Error('Cannot shift negative steps', 0,0)
+                                error = Error('No se puede desplazar pasos negativos', 0,0)
                                 semanticErrors.add(error)
                                 return
                             else:
@@ -925,12 +923,18 @@ def analize(entrada):
                     elif node == 'exit':
                         # fin de la ejecución
                         return print('EXITING')
+                        break
                     elif node == 'goto':
-                        # buscar la etiqueta en la tabla de simbolos o en el arbol, recorrer desde ese punto el arbol
+                        # search for label in ts, then run the the asociated to the label
+                        print('GOTO', node, tree[0], tree[1])
+                        if ts.isSymbolInTable(tree[1]):
+                            pass
+                        else:
+                            error = Error('No se ha declarado la etiqueta \''+ str(tree[1])+'\'', 0,0)
+                            semanticErrors.add(error)
                         return print('JUMPING TO', tree[1])
                     elif node == 'tag':
-                        # guardar la etiqueta como variable en la tabla de simbolos
-
+                        # labels were previously stored in ts
                         return #print('ADDING TAG', tree[1])
                     elif node == 'array':
                         # guardar variable como arreglo en la tabla de simbolos
@@ -951,7 +955,7 @@ def analize(entrada):
                 if tree[0] == '$':
                     # seach in TS
                     if ts.isSymbolInTable(tree):
-                        print('return value', ts.get(tree).value)
+                        #print('return value', ts.get(tree).value)
                         return ts.get(tree).value
                     else:
                         errorStr = 'Variable \''+ str(tree) + '\' not defined'
@@ -986,7 +990,6 @@ def analize(entrada):
     dotDataTS = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'5\'>Tabla de símbolos</td></tr>'
     dotDataTS = dotDataTS + '<tr><td>ID</td><td>Tipo</td><td>Valor</td><td>Longitud</td><td>Arbol asociado</td></tr>'
     for sym in ts.symbols:
-        treeToString = str(sym.tree).replace('\'', '\\\\\'')
         dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td><td>'+str(sym.tree)+'</td></tr>'
     dotDataTS = dotDataTS + '</table>>];}'
 
@@ -1008,7 +1011,5 @@ def analize(entrada):
 
     errorGraph = pydotplus.graph_from_dot_data(dotDataErrors)
     errorGraph.write_png('Reporte_Errores.png')
-
-
 
     return ast
