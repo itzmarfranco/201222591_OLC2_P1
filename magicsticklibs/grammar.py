@@ -567,21 +567,36 @@ def analize(entrada):
                         runTag(tree1[i], None)
                 else:
                     if tree1[i] == 'tag':
-                        print('ETIQUETA ENCONTRADA', tree1[1], '->', tree2)
+                        #print('ETIQUETA ENCONTRADA', tree1[1], '->', tree2)
                         sym = Symbol(tree1[1], 'tag', None, None, tree2)
                         ts.add(sym)
+
+    # flag to know if label encountered, 1=yes. If yes, 
+    flag = 0
 
     def run(tree):
         if type(tree) == tuple:
             for node in tree:
                 if type(node) == tuple:
-                    run(node)
+                    if node[0] == 'goto':
+                        print('NODO DE GOTO')
+                        print(tree)
+                        print('#############')
+                        if ts.isSymbolInTable(node[1]):
+                            sym = ts.get(node[1])
+                            return run(sym.tree)
+                        else:
+                            error = Error('No se ha declarado la etiqueta \''+ str(tree[1])+'\'', 0,0)
+                            semanticErrors.add(error)
+                        break
+                    else:
+                        run(node)
                 else:
                     if node == '=':
                         if tree[1] == 'array_a':
                             if ts.isSymbolInTable(tree[2]) and ts.get(tree[2]).length == 2:
                                 if run(tree[4]) != None:
-                                    print('ASSIGNING ARRAY ', tree[2],'[',run(tree[3]), '] -> ', run(tree[4]))
+                                    #print('ASSIGNING ARRAY ', tree[2],'[',run(tree[3]), '] -> ', run(tree[4]))
                                     #p[0] = ('=', 'array_a', p[1], p[3], p[6])
                                     varType = ''
                                     if isinstance(run(tree[4]), str):
@@ -618,7 +633,7 @@ def analize(entrada):
                                 pass
                         else:
                             if run(tree[2]) != None:
-                                print('ASSIGNING ', tree[1], ' -> ', run(tree[2]))
+                                #print('ASSIGNING ', tree[1], ' -> ', run(tree[2]))
                                 varType = ''
                                 if isinstance(run(tree[2]), str):
                                     varType = 'str'
@@ -922,16 +937,17 @@ def analize(entrada):
                         return print('DELETING', run(tree[1]))
                     elif node == 'exit':
                         # fin de la ejecución
-                        return print('EXITING')
+                        #return print('EXITING')
                         break
                     elif node == 'goto':
                         # search for label in ts, then run the the asociated to the label
-                        print('GOTO', node, tree[0], tree[1])
-                        if ts.isSymbolInTable(tree[1]):
-                            pass
-                        else:
-                            error = Error('No se ha declarado la etiqueta \''+ str(tree[1])+'\'', 0,0)
-                            semanticErrors.add(error)
+                        # if ts.isSymbolInTable(tree[1]):
+                        #     flag = 1
+                        #     sym = ts.get(tree[1])
+                        #     return run(sym.tree)
+                        # else:
+                        #     error = Error('No se ha declarado la etiqueta \''+ str(tree[1])+'\'', 0,0)
+                        #     semanticErrors.add(error)
                         return print('JUMPING TO', tree[1])
                     elif node == 'tag':
                         # labels were previously stored in ts
@@ -940,15 +956,12 @@ def analize(entrada):
                         # guardar variable como arreglo en la tabla de simbolos
                         sym = Symbol(tree[1], 'array', None, 2, ())
                         ts.add(sym)
-                        ts.print()
-                        return print('CREATING ARRAY', tree[1])                                        
+                        #return print('CREATING ARRAY', tree[1])                                        
                     elif node == 'read':
                         # capturar entrada escrita en la terminal
                         # guardar en la tabla de simbolos
                         return print('READING TO', tree[1])                                
                     else:
-                        #print('returning tree 1:::', tree)
-                        #return tree
                         pass
         else:
             if isinstance(tree, str):
