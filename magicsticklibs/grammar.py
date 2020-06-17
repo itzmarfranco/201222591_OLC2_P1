@@ -112,7 +112,7 @@ def analize(entrada):
     t_SHIFT_L = r'\<\<'
     t_SHIFT_R = r'\>\>'
 
-    t_EQUAL = r'\='
+    t_EQUAL = r'\=\='
     t_NOT_EQUAL = r'\!\='
     t_GREATER = r'\>'
     t_LESS = r'\<'
@@ -218,7 +218,7 @@ def analize(entrada):
         tree = p[0]
         runTag(tree, None)
         run(tree)
-        print(tree)
+        #print(tree)
         log.append('<tr><td>start : MAIN COLON body</td><td>p[0] = p[1]</td><td>'+ str(p.lineno(0)) +'</td><td>Etiqueta main</td></tr>')
 
     def p_body(p):
@@ -286,6 +286,13 @@ def analize(entrada):
         p[0] = ('print_array', var)
         log.append('<tr><td>print : print ( VAR [ OP ] )</td><td>p[0] = (print_array, VAR[OP])</td><td>'+ str(p.lineno(0)) +'</td><td>Instruccion imprimir arreglos</td></tr>')
 
+    def p_print_3(p):
+        '''
+        print : PRINT L_PAR STRING R_PAR SEMICOLON
+        '''
+        p[0] = ('print', p[3])
+        log.append('<tr><td>print : print ( STRING )</td><td>p[0] = (print, STRING)</td><td>'+ str(p.lineno(0)) +'</td><td>Instruccion imprimir cadenas</td></tr>')
+
     def p_exit(p):
         '''
         exit : EXIT SEMICOLON
@@ -339,7 +346,7 @@ def analize(entrada):
             | arithmetic LESS_EQUAL arithmetic
         '''
         p[0] = (p[2], p[1], p[3])
-        log.append('<tr><td>relational : arithmetic '+str(p[2])+'</td><td>p[0] = p[1]</td><td>'+ str(p.lineno(0)) +'</td><td>Operacion relacional '+str(p[2])+'</td></tr>')
+        log.append('<tr><td>relational : arithmetic OP arithmetic</td><td>p[0] = p[1]</td><td>'+ str(p.lineno(0)) +'</td><td>Operacion relacional</td></tr>')
 
     def p_relational_2(p):
         '''
@@ -531,6 +538,8 @@ def analize(entrada):
         #print(t)
         print("Error sintactico: " + str(t.value) + " , tipo: " + str(t.type))
         print("Linea: " + str(t.lineno) + " ,Columna: " + str(t.lexpos))
+        error = Error('Error en el token '+ str(t.value), str(t.lineno),0)
+        syntacticErrors.add(error)
 
     
     ts = Table([])
@@ -541,21 +550,6 @@ def analize(entrada):
     #  lineal AST
     tree = None
  
-# main:
-# goto label2;
-# $t9 = 'Testing labels';
-# print($t9);
-# label2:
-# $t9 = 'Skipped label';
-# print($t9);
-# label3:
-# goto label2;
-# label4:
-
-
-#runTAg(tree, None)
-
-
     def runTag(tree1, tree2):
         if type(tree1) == tuple:
             size = len(tree1)
@@ -579,16 +573,25 @@ def analize(entrada):
             for node in tree:
                 if type(node) == tuple:
                     if node[0] == 'goto':
-                        print('NODO DE GOTO')
-                        print(tree)
-                        print('#############')
                         if ts.isSymbolInTable(node[1]):
                             sym = ts.get(node[1])
                             return run(sym.tree)
                         else:
-                            error = Error('No se ha declarado la etiqueta \''+ str(tree[1])+'\'', 0,0)
+                            error = Error('No se ha declarado la etiqueta \''+ str(node[1])+'\'', 0,0)
                             semanticErrors.add(error)
                         break
+                    elif node[0] == 'if':
+                        if run(node[1]) == True:
+                            if ts.isSymbolInTable(node[2]):
+                                sym = ts.get(node[2])
+                                return run(sym.tree)
+                            else:
+                                error = Error('No se ha declarado la etiqueta \''+ str(node[2])+'\'', 0,0)
+                                semanticErrors.add(error)
+                            break
+                        else:
+                            #NOT TRUE
+                            pass
                     else:
                         run(node)
                 else:
@@ -934,7 +937,11 @@ def analize(entrada):
                         return print('PRINTING ARRAY', run(tree[1]))
                     elif node == 'unset':
                         # buscar en la tabla de símbolos la variable, eliminar el registro
-                        return print('DELETING', run(tree[1]))
+                        if ts.isSymbolInTable(tree[1]):
+                            ts.remove(tree[1])
+                        else:
+                            error = Error('No se ha declarado la variable \''+ str(tree[1])+'\'', 0,0)
+                            semanticErrors.add(error)
                     elif node == 'exit':
                         # fin de la ejecución
                         #return print('EXITING')
@@ -1003,7 +1010,8 @@ def analize(entrada):
     dotDataTS = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'5\'>Tabla de símbolos</td></tr>'
     dotDataTS = dotDataTS + '<tr><td>ID</td><td>Tipo</td><td>Valor</td><td>Longitud</td><td>Arbol asociado</td></tr>'
     for sym in ts.symbols:
-        dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td><td>'+str(sym.tree)+'</td></tr>'
+        #dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td><td>'+str(sym.tree)+'</td></tr>'
+        dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td><td>-</td></tr>'
     dotDataTS = dotDataTS + '</table>>];}'
 
     tsGraph = pydotplus.graph_from_dot_data(dotDataTS)

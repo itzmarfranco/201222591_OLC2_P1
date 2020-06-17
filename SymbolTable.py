@@ -18,12 +18,16 @@ class Table:
                 return
         self.symbols.append(symbol)
 
-            
-
     def get(self, id):
         for sym in self.symbols:
             if sym.id == id:
                 return sym
+
+    def remove(self, id):
+        for sym in self.symbols:
+            if sym.id == id:
+                self.symbols.remove(sym)
+                break
 
 
     def print(self):
