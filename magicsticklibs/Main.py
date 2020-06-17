@@ -40,5 +40,5 @@ if __name__=='__main__':
 	from TextPadConsola import TextPadConsola
 	
 else:
-	print ("Except")
+	#print ("Except")
 	pass

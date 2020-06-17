@@ -13,6 +13,8 @@ from Error import Error, ErrorList
 
 from .TextPadConsola import TextPadConsola
 
+import math
+
 
 def analize(entrada):
     
@@ -187,8 +189,10 @@ def analize(entrada):
         
     # Skip the current token and output 'Illegal characters' using the special Ply t_error function.
     def t_error(t):
-        print("Illegal characters!")
+        #print("Illegal characters!")
         t.lexer.skip(1)
+        error = Error('Caracter no permitido: '+ str(t.value), t.lineno,0)
+        lexicalErrors.add(error)
 
     # Build the lexer
     log = []
@@ -218,7 +222,7 @@ def analize(entrada):
         tree = p[0]
         runTag(tree, None)
         run(tree)
-        #print(tree)
+        print(tree)
         log.append('<tr><td>start : MAIN COLON body</td><td>p[0] = p[1]</td><td>'+ str(p.lineno(0)) +'</td><td>Etiqueta main</td></tr>')
 
     def p_body(p):
@@ -377,6 +381,13 @@ def analize(entrada):
         p[0] = p[1]
         log.append('<tr><td>arithmetic : INT | FLOAT | STRING | VAR</td><td>p[0] = p[1]</td><td>'+ str(p.lineno(0)) +'</td><td>Operando</td></tr>')
 
+    def p_arithmetic_3(p):
+        '''
+        arithmetic : MINUS arithmetic
+        '''
+        p[0] = ('-', p[2])
+        log.append('<tr><td>arithmetic : - arithmetic</td><td>p[0] = (-, p[2])</td><td>'+ str(p.lineno(0)) +'</td><td>Operador unario -</td></tr>')
+
     def p_var(p):
         '''
         var : TVAR
@@ -534,11 +545,18 @@ def analize(entrada):
         log.append('<tr><td>empty : </td><td>p[0] = None</td><td>'+ str(p.lineno(0)) +'</td><td>Produccion vacia</td></tr>')
 
 
-    def p_error(t):
+    def p_error(p):
+        if p:
+            #print("Syntax error at token", p.type)
+            # Just discard the token and tell the parser it's okay.
+            parser.errok()
+        else:
+            #print("Syntax error at EOF")
+            pass
         #print(t)
-        print("Error sintactico: " + str(t.value) + " , tipo: " + str(t.type))
-        print("Linea: " + str(t.lineno) + " ,Columna: " + str(t.lexpos))
-        error = Error('Error en el token '+ str(t.value), str(t.lineno),0)
+        #print("Error sintactico: " + str(t.value) + " , tipo: " + str(t.type))
+        #print("Linea: " + str(t.lineno) + " ,Columna: " + str(t.lexpos))
+        error = Error('Error en el token '+ str(p.type), str(p.lineno),0)
         syntacticErrors.add(error)
 
     
@@ -669,16 +687,28 @@ def analize(entrada):
                         else:
                             return run(tree[1]) + run(tree[2])
                     elif node == '-':
-                        if run(tree[1]) == None or run(tree[2]) == None:
-                            error = Error('No se puede operar con \'-\' valor  \'None\'', 0,0)
-                            semanticErrors.add(error)
-                            return
-                        elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
-                            error = Error('No se puede restar cadena y número', 0,0)
-                            semanticErrors.add(error)
-                            return
+                        if len(tree) == 3:
+                            if run(tree[1]) == None or run(tree[2]) == None:
+                                error = Error('No se puede operar con \'-\' valor  \'None\'', 0,0)
+                                semanticErrors.add(error)
+                                return
+                            elif isinstance(run(tree[1]), str) or isinstance(run(tree[2]), str):
+                                error = Error('No se puede restar cadena y número', 0,0)
+                                semanticErrors.add(error)
+                                return
+                            else:
+                                return run(tree[1]) - run(tree[2])
                         else:
-                            return run(tree[1]) - run(tree[2])
+                            if run(tree[1]) == None:
+                                error = Error('No se puede operar con \'-\' valor  \'None\'', 0,0)
+                                semanticErrors.add(error)
+                                return
+                            elif isinstance(run(tree[1]), str):
+                                error = Error('No se puede restar cadena y número', 0,0)
+                                semanticErrors.add(error)
+                                return
+                            else:
+                                return -run(tree[1])
                     elif node == '*':
                         if run(tree[1]) == None or run(tree[2]) == None:
                             error = Error('No se puede operar con \'*\' valor  \'None\'', 0,0)
@@ -931,10 +961,10 @@ def analize(entrada):
                                 return run(tree[1]) >> run(tree[2])
                     elif node == 'print':
                         # buscar en tabla de simbolos el valor de run(tree[1])
-                        return print('PRINTING', run(tree[1]))
+                        return print(run(tree[1]))
                     elif node == 'print_array':
                         # buscar en tabla de simbolos el valor de run(tree[1])
-                        return print('PRINTING ARRAY', run(tree[1]))
+                        return print(run(tree[1]))
                     elif node == 'unset':
                         # buscar en la tabla de símbolos la variable, eliminar el registro
                         if ts.isSymbolInTable(tree[1]):
@@ -946,6 +976,128 @@ def analize(entrada):
                         # fin de la ejecución
                         #return print('EXITING')
                         break
+                    elif node == 'convert':
+                        if tree[1] == 'int':
+                            # get value from TS
+                            var = tree[2]
+                            if ts.isSymbolInTable(tree[2]):
+                                sym = ts.get(tree[2])
+                                if sym.varType == 'flt':
+                                    return math.floor(sym.value)
+                                elif sym.varType == 'str':
+                                    return ord(sym.value[0])
+                                elif sym.varType == 'array':
+                                    # get all values for array
+                                    array = []
+                                    #(index,value,type)
+                                    for s in ts.symbols:
+                                        if len(s.id.split('[')) > 1:
+                                            id = s.id.split('[')[0]
+                                            index = s.id.split('[')[1].split(']')[0]
+                                            if id == var and s.value != None:
+                                                array.append((index, s.value, s.varType))
+                                    array.sort()
+                                    if array[0][2] == 'int':
+                                        return array[0][1]
+                                    elif array[0][2] == 'flt':
+                                        return math.floor(array[0][1])
+                                    elif array[0][2] == 'str':
+                                        return ord(array[0][1][0])
+                                elif sym.varType == 'int':
+                                    return sym.value
+                            else:
+                                pass
+                        elif tree[1] == 'float':
+                            # get value from TS
+                            var = tree[2]
+                            if ts.isSymbolInTable(tree[2]):
+                                sym = ts.get(tree[2])
+                                if sym.varType == 'flt':
+                                    return sym.value
+                                elif sym.varType == 'str':
+                                    return ord(math.floor(sym.value[0]))
+                                elif sym.varType == 'array':
+                                    # get all values for array
+                                    array = []
+                                    #(index,value,type)
+                                    for s in ts.symbols:
+                                        if len(s.id.split('[')) > 1:
+                                            id = s.id.split('[')[0]
+                                            index = s.id.split('[')[1].split(']')[0]
+                                            if id == var and s.value != None:
+                                                array.append((index, s.value, s.varType))
+                                    array.sort()
+                                    if array[0][2] == 'int':
+                                        return float(array[0][1])
+                                    elif array[0][2] == 'flt':
+                                        return array[0][1]
+                                    elif array[0][2] == 'str':
+                                        return ord(math.floor(array[0][1][0]))
+                                elif sym.varType == 'int':
+                                    return float(sym.value)
+                            else:
+                                pass
+                        elif tree[1] == 'char':
+                            # get value from TS
+                            var = tree[2]
+                            if ts.isSymbolInTable(tree[2]):
+                                sym = ts.get(tree[2])
+                                if sym.varType == 'flt':
+                                    newVal = math.floor(sym.value)
+                                    if newVal < 256:
+                                        return chr(newVal)
+                                    elif sym.value >= 256:
+                                        return chr(newVal % 256)
+                                    else:
+                                        error = Error('No se puede convertir a caracter un número negativo', 0,0)
+                                        semanticErrors.add(error)
+                                        return 
+                                elif sym.varType == 'str':
+                                    return sym.value[0]
+                                elif sym.varType == 'array':
+                                    # get all values for array
+                                    array = []
+                                    #(index,value,type)
+                                    for s in ts.symbols:
+                                        if len(s.id.split('[')) > 1:
+                                            id = s.id.split('[')[0]
+                                            index = s.id.split('[')[1].split(']')[0]
+                                            if id == var and s.value != None:
+                                                array.append((index, s.value, s.varType))
+                                    array.sort()
+                                    if array[0][2] == 'int':
+                                        newVal = array[0][1]
+                                        if newVal < 256:
+                                            return chr(newVal)
+                                        elif newVal >= 256:
+                                            return chr(newVal % 256)
+                                        else:
+                                            error = Error('No se puede convertir a caracter un número negativo', 0,0)
+                                            semanticErrors.add(error)
+                                            return
+                                    elif array[0][2] == 'flt':
+                                        newVal = array[0][1]
+                                        if newVal < 256:
+                                            return chr(newVal)
+                                        elif sym.value >= 256:
+                                            return chr(newVal % 256)
+                                        else:
+                                            error = Error('No se puede convertir a caracter un número negativo', 0,0)
+                                            semanticErrors.add(error)
+                                            return 
+                                    elif array[0][2] == 'str':
+                                        return array[0][1][0]
+                                elif sym.varType == 'int':
+                                    if sym.value < 256:
+                                        return chr(sym.value)
+                                    elif sym.value >= 256:
+                                        return chr(sym.value % 256)
+                                    else:
+                                        error = Error('No se puede convertir a caracter un número negativo', 0,0)
+                                        semanticErrors.add(error)
+                                        return
+                            else:
+                                pass
                     elif node == 'goto':
                         # search for label in ts, then run the the asociated to the label
                         # if ts.isSymbolInTable(tree[1]):
@@ -967,7 +1119,22 @@ def analize(entrada):
                     elif node == 'read':
                         # capturar entrada escrita en la terminal
                         # guardar en la tabla de simbolos
-                        return print('READING TO', tree[1])                                
+                        var = input('>>')
+                        varType = ''
+                        try:
+                            varInt = int(var)
+                            varType = 'int'
+                        except:
+                                try:
+                                    varFloat = float(var)
+                                    varType = 'flt'
+                                except:
+                                    varType = 'str'
+
+                        id = str(tree[1])
+                        sym = Symbol(id, varType, var, 1, ())
+                        ts.add(sym)
+                        return #print('READING TO', tree[1])
                     else:
                         pass
         else:
@@ -978,7 +1145,7 @@ def analize(entrada):
                         #print('return value', ts.get(tree).value)
                         return ts.get(tree).value
                     else:
-                        errorStr = 'Variable \''+ str(tree) + '\' not defined'
+                        errorStr = 'Variable \''+ str(tree) + '\' No definida'
                         error = Error(errorStr, 0,0)
                         semanticErrors.add(error)
                         return None
@@ -1007,11 +1174,12 @@ def analize(entrada):
     reportGraph = pydotplus.graph_from_dot_data(dotDataReport)
     reportGraph.write_png('Reporte_gramatical.png')
 
-    dotDataTS = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'5\'>Tabla de símbolos</td></tr>'
-    dotDataTS = dotDataTS + '<tr><td>ID</td><td>Tipo</td><td>Valor</td><td>Longitud</td><td>Arbol asociado</td></tr>'
+    dotDataTS = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'4\'>Tabla de símbolos</td></tr>'
+    #dotDataTS = dotDataTS + '<tr><td>ID</td><td>Tipo</td><td>Valor</td><td>Longitud</td><td>Arbol asociado</td></tr>'
+    dotDataTS = dotDataTS + '<tr><td>ID</td><td>Tipo</td><td>Valor</td><td>Longitud</td></tr>'
     for sym in ts.symbols:
         #dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td><td>'+str(sym.tree)+'</td></tr>'
-        dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td><td>-</td></tr>'
+        dotDataTS += '<tr><td>'+str(sym.id)+'</td><td>'+str(sym.varType)+'</td><td>'+str(sym.value)+'</td><td>'+str(sym.length)+'</td></tr>'
     dotDataTS = dotDataTS + '</table>>];}'
 
     tsGraph = pydotplus.graph_from_dot_data(dotDataTS)

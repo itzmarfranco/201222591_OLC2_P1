@@ -138,13 +138,13 @@ class Configuration:
 
 	def apply(self, event=None):
 
-		print("Loading Settings...")
+		#print("Loading Settings...")
 		value = dict(self.db.readall())
 		self.text.configure(**value)
 		return
 
 	def retrieve(self, event=None):
-		print("Saving Settings...")
+		#print("Saving Settings...")
 		value = dict(self.db.readall())
 		for key, value in value.items():
 			cvalue = self.text.cget(key)
