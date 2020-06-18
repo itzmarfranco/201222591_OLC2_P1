@@ -567,6 +567,15 @@ def analize(entrada):
     semanticErrors = ErrorList([])
     #  lineal AST
     tree = None
+
+    counter = 0
+    def graphAST(tree):
+        if type(tree) == tuple:
+            for node in tree:
+                print(node)
+                graphAST(node)
+        else:
+            print('n'+str(counter), ' [label = '+ node[0] +']')
  
     def runTag(tree1, tree2):
         if type(tree1) == tuple:
@@ -1172,7 +1181,7 @@ def analize(entrada):
     dotDataReport = dotDataReport + '</table>>];}'
 
     reportGraph = pydotplus.graph_from_dot_data(dotDataReport)
-    reportGraph.write_png('Reporte_gramatical.png')
+    reportGraph.write_pdf('Reporte_gramatical.pdf')
 
     dotDataTS = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'4\'>Tabla de símbolos</td></tr>'
     #dotDataTS = dotDataTS + '<tr><td>ID</td><td>Tipo</td><td>Valor</td><td>Longitud</td><td>Arbol asociado</td></tr>'
@@ -1183,7 +1192,7 @@ def analize(entrada):
     dotDataTS = dotDataTS + '</table>>];}'
 
     tsGraph = pydotplus.graph_from_dot_data(dotDataTS)
-    tsGraph.write_png('Reporte_TablaSimbolos.png')
+    tsGraph.write_pdf('Reporte_TablaSimbolos.pdf')
 
     dotDataErrors = 'digraph{tbl[shape=plaintext\nlabel=<<table><tr><td colspan=\'3\'>Reporte de errores</td></tr>'
     dotDataErrors = dotDataErrors + '<tr><td>Error</td><td>Tipo</td><td>Linea</td></tr>'
@@ -1199,6 +1208,8 @@ def analize(entrada):
     dotDataErrors = dotDataErrors + '</table>>];}'
 
     errorGraph = pydotplus.graph_from_dot_data(dotDataErrors)
-    errorGraph.write_png('Reporte_Errores.png')
+    errorGraph.write_pdf('Reporte_Errores.pdf')
+
+
 
     return ast
