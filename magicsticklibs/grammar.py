@@ -222,7 +222,7 @@ def analize(entrada):
         tree = p[0]
         runTag(tree, None)
         run(tree)
-        print(tree)
+        #print(tree)
         log.append('<tr><td>start : MAIN COLON body</td><td>p[0] = p[1]</td><td>'+ str(p.lineno(0)) +'</td><td>Etiqueta main</td></tr>')
 
     def p_body(p):
